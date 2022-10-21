@@ -2,7 +2,7 @@
 #SBATCH --job-name=G_maculatum                   # Job name
 #SBATCH --partition=batch		                            # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
-#SBATCH --cpus-per-task=6		                            # Number of cores per task - match this to the num_threads used by BLAST
+#SBATCH --cpus-per-task=6		                            # Number of cores per taskT
 #SBATCH --mem=24gb			                                # Total memory for job
 #SBATCH --time=12:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files (replace cbergman with your myid)
