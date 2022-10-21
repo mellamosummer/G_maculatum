@@ -20,7 +20,7 @@ then
 fi
 
 
-#load modules
+load modules
 module load FastQC/0.11.9-Java-11
 module load MultiQC/1.8-foss-2019b-Python-3.7.4
 module load Trimmomatic/0.39-Java-1.8.0_144
@@ -28,21 +28,21 @@ module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 module load Jellyfish/2.3.0-GCC-8.3.0
 
-#QC pre-trim with FASTQC & MultiQC
-mkdir $OUTDIR/FastQC
-mkdir $OUTDIR/FastQC/pretrim
-fastqc -o $OUTDIR/FastQC/pretrim/ /home/srb67793/G_maculatum/*.gz
-multiqc $OUTDIR/FastQC/pretrim/*.zip
+# #QC pre-trim with FASTQC & MultiQC
+# mkdir $OUTDIR/FastQC
+# mkdir $OUTDIR/FastQC/pretrim
+# fastqc -o $OUTDIR/FastQC/pretrim/ /home/srb67793/G_maculatum/*.gz
+# multiqc $OUTDIR/FastQC/pretrim/*.zip
 
-# #trim reads with trimmomatic
-# java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar PE  -threads 4 \
-# /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz \
-# $OUTDIR/trimmomatic/R1_paired.fastq.gz \
-# $OUTDIR/trimmomatic/R1_unpaired.fastq.gz \
-# $OUTDIR/trimmomatic/R2_paired.fastq.gz \
-# $OUTDIR/trimmomatic/R2_unpaired.fastq.gz \
-# ILLUMINACLIP:$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE-2.fa:2:30:10 \
-# LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+#trim reads with trimmomatic
+java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar PE  -threads 4 \
+/home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz \
+$OUTDIR/trimmomatic/R1_paired.fastq.gz \
+$OUTDIR/trimmomatic/R1_unpaired.fastq.gz \
+$OUTDIR/trimmomatic/R2_paired.fastq.gz \
+$OUTDIR/trimmomatic/R2_unpaired.fastq.gz \
+ILLUMINACLIP:$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE-2.fa:2:30:10 \
+LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 #
 # #QC post-trim with FASTQC & MultiQC
 # fastqc -o $OUTDIR/FastQC/trimmed $OUTDIR/trimmomatic/*.gz
