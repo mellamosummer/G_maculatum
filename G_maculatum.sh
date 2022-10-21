@@ -20,18 +20,18 @@ then
 fi
 
 
-#load modules
-module load FastQC/0.11.9-Java-11
-module load MultiQC/1.8-foss-2019b-Python-3.7.4
-module load Trimmomatic/0.39-Java-1.8.0_144
-module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
-module load QUAST/5.0.2-foss-2019b-Python-3.7.4
-module load Jellyfish/2.3.0-GCC-8.3.0
+# #load modules
+# module load FastQC/0.11.9-Java-11
+# module load MultiQC/1.8-foss-2019b-Python-3.7.4
+# module load Trimmomatic/0.39-Java-1.8.0_144
+# module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
+# module load QUAST/5.0.2-foss-2019b-Python-3.7.4
+# module load Jellyfish/2.3.0-GCC-8.3.0
 
 #QC pre-trim with FASTQC & MultiQC
-mkdir $OUTDIR/FastQC/pretrim/
-fastqc -o $OUTDIR/FastQC/pretrim/ /home/srb67793/G_maculatum/*.gz
-multiqc $OUTDIR/FastQC/pretrim/*.zip
+mkdir $OUTDIR/FastQC/pretrim
+# fastqc -o $OUTDIR/FastQC/pretrim/ /home/srb67793/G_maculatum/*.gz
+# multiqc $OUTDIR/FastQC/pretrim/*.zip
 
 # #trim reads with trimmomatic
 # java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar PE  -threads 4 \
