@@ -34,12 +34,29 @@ module load Trim_Galore/0.6.5-GCCcore-8.3.0-Java-11-Python-3.7.4
 # fastqc -o $OUTDIR/FastQC/pretrim/ /home/srb67793/G_maculatum/*.gz
 # multiqc $OUTDIR/FastQC/pretrim/*.zip -o $OUTDIR/FastQC/pretrim/
 
+<<<<<<< HEAD
 #trim reads with trimmomatic (took ~3 hrs)
 mkdir $OUTDIR/trim_galore
 trim_galore --fastqc -j 6 --paired --retain_unpaired -o $OUTDIR/trim_galore \
 /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz \
 /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz \
 
+=======
+#trim reads with trimmomatic
+java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar PE  -threads 4 \
+/home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz \
+$OUTDIR/trimmomatic/R1_paired.fastq.gz \
+$OUTDIR/trimmomatic/R1_unpaired.fastq.gz \
+$OUTDIR/trimmomatic/R2_paired.fastq.gz \
+$OUTDIR/trimmomatic/R2_unpaired.fastq.gz \
+ILLUMINACLIP:$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE-2.fa:2:30:10 \
+LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+#
+# #QC post-trim with FASTQC & MultiQC
+# fastqc -o $OUTDIR/FastQC/trimmed $OUTDIR/trimmomatic/*.gz
+# multiqc $OUTDIR/FastQC/trimmed/*.zip
+#
+>>>>>>> parent of 3997d75 (running trimmomatic)
 # #assemble the  genome using Illumina short reads with SPAdes
 # spades.py -t 6 -k 21,33,55,77 --isolate --memory 24 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz  --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
 
