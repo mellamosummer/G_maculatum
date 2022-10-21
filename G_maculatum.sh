@@ -47,8 +47,8 @@ module load MultiQC/1.8-foss-2019b-Python-3.7.4
 #
 # #QC post-trim with FASTQC & MultiQC
 mkdir $OUTDIR/FastQC/trimmed
-fastqc -o $OUTDIR/FastQC/trimmed $OUTDIR/trimmomatic/*paired.gz
-multiqc $OUTDIR/FastQC/trimmed/*.zip
+# fastqc -o $OUTDIR/FastQC/trimmed $OUTDIR/trimmomatic/*paired.gz
+# multiqc $OUTDIR/FastQC/trimmed/*.zip
 
 # #assemble the  genome using Illumina short reads with SPAdes
 # spades.py -t 6 -k 21,33,55,77 --isolate --memory 24 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz  --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
