@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1			                                # Single task job
 #SBATCH --cpus-per-task=6		                            # Number of cores per task - match this to the num_threads used by BLAST
 #SBATCH --mem=24gb			                                # Total memory for job
-#SBATCH --time=6:00:00  		                            # Time limit hrs:min:sec
+#SBATCH --time=12:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files (replace cbergman with your myid)
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -22,50 +22,51 @@ fi
 #
 # load modules
 # module load FastQC/0.11.9-Java-11
-module load MultiQC/1.8-foss-2019b-Python-3.7.4
-# module load Trimmomatic/0.39-Java-1.8.0_144
+# module load MultiQC/1.8-foss-2019b-Python-3.7.4
+module load Trim_Galore/0.6.5-GCCcore-8.3.0-Java-11-Python-3.7.4
 # module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 
-# #QC pre-trim with FASTQC & MultiQC
+# #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
 # mkdir $OUTDIR/FastQC
 # mkdir $OUTDIR/FastQC/pretrim
 # fastqc -o $OUTDIR/FastQC/pretrim/ /home/srb67793/G_maculatum/*.gz
-multiqc $OUTDIR/FastQC/pretrim/*.zip -o $OUTDIR/FastQC/pretrim/
+# multiqc $OUTDIR/FastQC/pretrim/*.zip -o $OUTDIR/FastQC/pretrim/
 
-#trim reads with trimmomatic
-# mkdir $OUTDIR/trimmomatic
-# java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar PE  -threads 4 \
-# /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz \
-# /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz \
-# $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz \
-# $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_unpaired.fq.gz \
-# $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz \
-# $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_unpaired.fq.gz  \
-# ILLUMINACLIP:$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE-2.fa:2:30:10 \
-# LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+#trim reads with trimmomatic (took ~3 hrs)
+mkdir $OUTDIR/trim_galore
+trim_galore --fastqc -j 6 --paired --retain_unpaired -o $OUTDIR/trim_galore \
+/home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz \
+/work/gene8940/instructor_data/s_6_2.fastq.gz \
+/home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz
 
-#
-# #QC post-trim with FASTQC & MultiQC
-# mkdir $OUTDIR/FastQC/trimmed
-# fastqc -o $OUTDIR/FastQC/trimmed $OUTDIR/trimmomatic/*.gz
-# multiqc $OUTDIR/FastQC/trimmed/*.zip
-#
 # #assemble the  genome using Illumina short reads with SPAdes
-# spades.py -t 6 -k 21,33,55,77 --isolate --memory 24 --pe1-1 $OUTDIR/trimmomatic/R1_paired.fastq.gz --pe1-2 /$OUTDIR/trimmomatic/R2_paired.fastq.gz -o $OUTDIR/spades
+# spades.py -t 6 -k 21,33,55,77 --isolate --memory 24 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz  --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
 
-# #can i do quast or mummer?
-#
 # #kmer analysis with Jellyfish
-# jellyfish count -m 31 -s 100M -t 10 -C reads.fasta -o $OUTDIR/jellyfish
+# mkdir $OUTDIR/jellyfish
+# jellyfish count -C -m 31 -s 1000000000 -t 10 *.fastq -o $OUTDIR/jellyfish/reads.jf
+# jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf > reads.histo
+#download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
 
-#genome scope for analysis of kmers & findGSE https://github.com/schneebergerlab/findGSE
-
-#kmer analysis & plastid assembly
+#plastid assembly
 #spades and then BLAST or mummer or use minimap to pull out plastome
   #to do search of similar plastid assembly
   #fethc those pieces
-  #then use another tool for comparative scaffolding
+  #then use another tool for comparative scaffolding (RAGTAG)
 
-#related species -- map the reads to it
+# #get organelle
+#   R01='trimmed_reads/Asparagus_nelsii_Norup_142_P_R1.fastq.gz'
+#   # path to R2 reads
+#   R02='trimmed_reads/Asparagus_nelsii_Norup_142_P_R2.fastq.gz'
+#   # name of sample for output
+#   sample_name='G_maculatum'
+#   ​
+#   # load GetOrganelle
+#   ml GetOrganelle/1.7.5.2-foss-2020b
+#   ​
+#   # assemble plastome
+#   get_organelle_from_reads.py -t 8 -1 $R01 -2 $R02 -F embplant_pt -o $sample_name\_plastome_GetOrganelle
+#
+# #related species -- map the reads to it
