@@ -10,7 +10,7 @@
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
 
 #set output directory variable
-OUTDIR="/work/jlmlab/G_maculatum"
+OUTDIR="/scratch/srb67793/G_maculatum"
 
 #if output directory doesn't exist, create it
 
