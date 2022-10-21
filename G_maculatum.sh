@@ -35,14 +35,17 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 # multiqc $OUTDIR/FastQC/pretrim/*.zip
 
 #trim reads with trimmomatic
+mkdir $OUTDIR/trimmomatic
 java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar PE  -threads 4 \
-/home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz \
-$OUTDIR/trimmomatic/R1_paired.fastq.gz \
-$OUTDIR/trimmomatic/R1_unpaired.fastq.gz \
-$OUTDIR/trimmomatic/R2_paired.fastq.gz \
-$OUTDIR/trimmomatic/R2_unpaired.fastq.gz \
+/home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz \
+/home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz \
+$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz \
+$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_unpaired.fq.gz \
+$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz \
+$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_unpaired.fq.gz  \
 ILLUMINACLIP:$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE-2.fa:2:30:10 \
 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
 #
 # #QC post-trim with FASTQC & MultiQC
 # fastqc -o $OUTDIR/FastQC/trimmed $OUTDIR/trimmomatic/*.gz
