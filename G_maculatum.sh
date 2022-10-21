@@ -21,11 +21,11 @@ fi
 #
 #
 # load modules
-module load FastQC/0.11.9-Java-11
-module load MultiQC/1.8-foss-2019b-Python-3.7.4
+# module load FastQC/0.11.9-Java-11
+# module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
-# module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
-# module load QUAST/5.0.2-foss-2019b-Python-3.7.4
+module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
+# module load GetOrganelle/1.7.5.2-foss-2020b
 # module load Jellyfish/2.3.0-GCC-8.3.0
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
@@ -72,9 +72,7 @@ spades.py -t 6 -k 21,33,55,77 --isolate --memory 24 --pe1-1 $OUTDIR/trimmomatic/
 #   R02='trimmed_reads/Asparagus_nelsii_Norup_142_P_R2.fastq.gz'
 #   # name of sample for output
 #   sample_name='G_maculatum'
-#   ​
-#   # load GetOrganelle
-#   ml GetOrganelle/1.7.5.2-foss-2020b
+#
 #   ​
 #   # assemble plastome
 #   get_organelle_from_reads.py -t 8 -1 $R01 -2 $R02 -F embplant_pt -o $sample_name\_plastome_GetOrganelle
