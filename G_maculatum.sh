@@ -29,6 +29,7 @@ module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 module load Jellyfish/2.3.0-GCC-8.3.0
 
 #QC pre-trim with FASTQC & MultiQC
+mkdir $OUTDIR/FastQC/pretrim
 fastqc -o $OUTDIR/FastQC/pretrim /home/srb67793/G_maculatum/*.gz
 multiqc $OUTDIR/FastQC/pretrim/*.zip
 
