@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1			                                # Single task job
 #SBATCH --cpus-per-task=15		                            # Number of cores per taskT
 #SBATCH --mem=1000gb			                                # Total memory for job
-#SBATCH --time=10:00:00  		                            # Time limit hrs:min:sec
+#SBATCH --time=8:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files (replace cbergman with your myid)
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
