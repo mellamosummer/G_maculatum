@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=6		                            # Number of cores per taskT
 #SBATCH --mem=950gb			                                # Total memory for job
 #SBATCH --time=8:00:00  		                            # Time limit hrs:min:sec
-#SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files (replace cbergman with your myid)
+#SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
 
@@ -52,7 +52,7 @@ module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 
 # #assemble the  genome using Illumina short reads with SPAdes
 mkdir $OUTDIR/spades
-spades.py -t 6 -k 21,33,55,77 --isolate --memory 250 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz  --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
+spades.py -t 6 -k 21,33,55,77 --isolate --memory 950 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz  --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
 
 # #kmer analysis with Jellyfish
 # mkdir $OUTDIR/jellyfish
