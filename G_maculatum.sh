@@ -25,8 +25,8 @@ fi
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-module load ABySS/2.3.1-foss-2019b
-# module load Jellyfish/2.3.0-GCC-8.3.0
+# module load ABySS/2.3.1-foss-2019b
+module load Jellyfish/2.3.0-GCC-8.3.0
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
 # mkdir $OUTDIR/FastQC
@@ -57,7 +57,8 @@ module load ABySS/2.3.1-foss-2019b
 # mkdir $OUTDIR/spades
 # mkdir /scratch/srb67793/G_maculatum/abyss/
 
-abyss-pe name=g_maculatum k=96 B=2G in='../$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq ../$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+# mv /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/g_maculatum
+# abyss-pe name=g_maculatum k=96 B=2G in='../$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq ../$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
 
 # for kc in 2 3; do
 # 	for k in `seq 50 8 90`; do
@@ -72,6 +73,9 @@ abyss-pe name=g_maculatum k=96 B=2G in='../$OUTDIR/trimmomatic/OT1_CKDN220054653
 # #kmer analysis with Jellyfish
 # mkdir $OUTDIR/jellyfish
 # gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
+
+jellyfish count -m 21 -s 100M -t 10 -C <(cat $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq) <(cat $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq)
+
 # jellyfish count -C -m 31 -s 1000000000 -t 10 -F 2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o reads.jf
 # jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf $OUTDIR/jellyfish/reads.histo
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
