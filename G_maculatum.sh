@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=G_maculatum                   # Job name
-#SBATCH --partition=highmem_p                         # Partition (queue) name
+#SBATCH --partition=batch                         # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
-#SBATCH --cpus-per-task=8	                            # Number of cores per taskT
-#SBATCH --mem=950gb	                                # Total memory for job
+#SBATCH --cpus-per-task=10	                            # Number of cores per taskT
+#SBATCH --mem=50gb	                                # Total memory for job
 #SBATCH --time=96:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
@@ -25,8 +25,8 @@ fi
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
-# module load Jellyfish/2.3.0-GCC-8.3.0
+# module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
+module load Jellyfish/2.3.0-GCC-8.3.0
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
 # mkdir $OUTDIR/FastQC
@@ -54,13 +54,13 @@ module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # get_organelle_from_reads.py -t 8 -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -F embplant_pt -o $OUTDIR/plastome_GetOrganelle
 
 #assemble the  genome using Illumina short reads with SPAdes
-mkdir $OUTDIR/spades
-spades.py -t 8 -k 21,33,55,77 --isolate --memory 250 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
+# mkdir $OUTDIR/spades
+# spades.py -t 8 -k 21,33,55,77 --isolate --memory 250 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
 
 # #kmer analysis with Jellyfish
-# mkdir $OUTDIR/jellyfish
-# jellyfish count -C -m 31 -s 1000000000 -t 10 *.fastq -o $OUTDIR/jellyfish/reads.jf
-# jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf > reads.histo
+mkdir $OUTDIR/jellyfish
+jellyfish count -C -m 31 -t 10 /home/srb67793/G_maculatum/*.gz -o $OUTDIR/jellyfish/reads.jf
+jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf > reads.histo
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
 
 #plastid assembly
