@@ -58,9 +58,10 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 # spades.py -t 8 -k 21,33,55,77 --isolate --memory 250 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
 
 # #kmer analysis with Jellyfish
-mkdir $OUTDIR/jellyfish
-zcat $OUTDIR/trimmomatic/*paired.fq.gz | jellyfish count -m 31 -s 100M -t 10 -C -o $OUTDIR/jellyfish/reads.jf
-jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf > $OUTDIR/jellyfish/reads.histo
+# mkdir $OUTDIR/jellyfish
+# gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
+jellyfish count -C -m 31 -s 1000000000 -t 10 -F 2 $OUTDIR/trimmomatic/*.fq -o reads.jf
+jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf $OUTDIR/jellyfish/reads.histo
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
 
 #plastid assembly
