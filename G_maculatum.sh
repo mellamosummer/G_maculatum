@@ -57,7 +57,7 @@ module load ABySS/2.3.1-foss-2019b
 # mkdir $OUTDIR/spades
 # mkdir /scratch/srb67793/G_maculatum/abyss/
 
-abyss-pe name=g_maculatum k=96 B=2G in='/$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+abyss-pe name=g_maculatum k=96 B=2G in='../$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq ../$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
 
 # for kc in 2 3; do
 # 	for k in `seq 50 8 90`; do
