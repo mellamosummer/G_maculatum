@@ -56,13 +56,16 @@ module load ABySS/2.3.1-foss-2019b
 #assemble the  genome using Illumina short reads with SPAdes
 # mkdir $OUTDIR/spades
 # mkdir /scratch/srb67793/G_maculatum/abyss/
-for kc in 2 3; do
-	for k in `seq 50 8 90`; do
-		# mkdir $OUTDIR/abyss/k${k}-kc${kc}
-		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=g_maculatum B=2G k=$k kc=$kc in=../$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq ../$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq
-	done
-done
-abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
+
+abyss-pe name=g_maculatum k=96 B=2G in='/$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+
+# for kc in 2 3; do
+# 	for k in `seq 50 8 90`; do
+# 		# mkdir $OUTDIR/abyss/k${k}-kc${kc}
+# 		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=g_maculatum B=2G k=$k kc=$kc in='/$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+# 	done
+# done
+# abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
 
 # spades.py -t 8 -k 21,33,55,77 --isolate --memory 250 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
 
