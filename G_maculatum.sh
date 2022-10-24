@@ -55,9 +55,10 @@ module load ABySS/2.3.1-foss-2019b
 
 #assemble the  genome using Illumina short reads with SPAdes
 # mkdir $OUTDIR/spades
+# mkdir /scratch/srb67793/G_maculatum/abyss/
 for kc in 2 3; do
 	for k in `seq 50 8 90`; do
-		mkdir "$OUTDIR/abyss/k${k}-kc${kc}"
+		# mkdir $OUTDIR/abyss/k${k}-kc${kc}
 		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=g_maculatum B=2G k=$k kc=$kc in='$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
 	done
 done
