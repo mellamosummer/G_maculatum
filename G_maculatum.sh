@@ -3,7 +3,7 @@
 #SBATCH --partition=batch                         # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
 #SBATCH --cpus-per-task=10	                            # Number of cores per taskT
-#SBATCH --mem=50gb	                                # Total memory for job
+#SBATCH --mem=250gb	                                # Total memory for job
 #SBATCH --time=96:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
@@ -60,24 +60,6 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 # #kmer analysis with Jellyfish
 # mkdir $OUTDIR/jellyfish
 # gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
-jellyfish count -C -m 31 -s 1000000000 -t 10 -F 2 $OUTDIR/trimmomatic/*.fq -o reads.jf
+jellyfish count -C -m 31 -s 1000000000 -t 10 -F 2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o reads.jf
 jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf $OUTDIR/jellyfish/reads.histo
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
-
-#plastid assembly
-#spades and then BLAST or mummer or use minimap to pull out plastome
-  #to do search of similar plastid assembly
-  #fethc those pieces
-  #then use another tool for comparative scaffolding (RAGTAG)
-
-# #get organelle
-#   R01='trimmed_reads/Asparagus_nelsii_Norup_142_P_R1.fastq.gz'
-#   # path to R2 reads
-#   R02='trimmed_reads/Asparagus_nelsii_Norup_142_P_R2.fastq.gz'
-#   # name of sample for output
-#   sample_name='G_maculatum'
-#
-#   ​
-
-#
-# #related species -- map the reads to it
