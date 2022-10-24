@@ -25,8 +25,8 @@ fi
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-# module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
-module load Jellyfish/2.3.0-GCC-8.3.0
+module load ABySS/2.3.1-foss-2019b
+# module load Jellyfish/2.3.0-GCC-8.3.0
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
 # mkdir $OUTDIR/FastQC
@@ -55,11 +55,19 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 
 #assemble the  genome using Illumina short reads with SPAdes
 # mkdir $OUTDIR/spades
+for kc in 2 3; do
+	for k in `seq 50 8 90`; do
+		mkdir $OUTDIR/abyss/k${k}-kc${kc}
+		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=g_maculatum B=2G k=$k kc=$kc in='$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+	done
+done
+abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
+
 # spades.py -t 8 -k 21,33,55,77 --isolate --memory 250 --pe1-1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz --pe1-2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -o $OUTDIR/spades
 
 # #kmer analysis with Jellyfish
 # mkdir $OUTDIR/jellyfish
 # gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
-jellyfish count -C -m 31 -s 1000000000 -t 10 -F 2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o reads.jf
-jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf $OUTDIR/jellyfish/reads.histo
+# jellyfish count -C -m 31 -s 1000000000 -t 10 -F 2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o reads.jf
+# jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf $OUTDIR/jellyfish/reads.histo
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
