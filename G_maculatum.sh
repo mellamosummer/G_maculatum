@@ -59,7 +59,7 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 
 # #kmer analysis with Jellyfish
 mkdir $OUTDIR/jellyfish
-zcat /home/srb67793/G_maculatum/*.gz | jellyfish count -m 31 -s 325M -t 10 -C -o $OUTDIR/jellyfish/reads.jf
+zcat $OUTDIR/trimmomatic/*paired.fq.gz | jellyfish count -m 31 -s 325M -t 10 -C -o $OUTDIR/jellyfish/reads.jf
 jellyfish histo -t 10 $OUTDIR/jellyfish/reads.jf > $OUTDIR/jellyfish/reads.histo
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
 
