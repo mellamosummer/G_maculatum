@@ -40,13 +40,13 @@
 # RESEARCH QUESTIONS:
 # WHAT DO YOU DO WITH AN ASSEMBLED PLASTOME? -- NOT SURE WHAT TO INTERPRET FROM THIS
   #CAN WE MAKE A PHYLOGENY INCLUDING G MACULATUM WITH AVAILABLE PLASTOMES NOW?
-# HOW DO YOU INTERPRET THE KMER FIGURES? 
+# HOW DO YOU INTERPRET THE KMER FIGURES?
 
 ##################################
 
 
 #set output directory variable
-OUTDIR="/scratch/srb67793/G_maculatum"
+# OUTDIR="/scratch/srb67793/G_maculatum"
 
 #if output directory doesn't exist, create it
 
@@ -62,7 +62,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
 # module load ABySS/2.3.1-foss-2019b
-module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
+# module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/1.0-foss-2019b-R-4.0.0
