@@ -53,9 +53,29 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 # assemble plastome
 # get_organelle_from_reads.py -t 8 -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -F embplant_pt -o $OUTDIR/plastome_GetOrganelle
 
-#Annotate plastome
+################NEED TO ANNOTATE PLASTOME##################################
 
-#assemble the  genome using Illumina short reads with SPAdes
+################currently working on this chunk of code################
+
+# # kmer analysis with Jellyfish for loop 19-32-mers
+# mkdir $OUTDIR/jellyfish
+# gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
+#
+# for m in 19 21 23 25 27 29 31; do
+#   jellyfish count -m $m -s 100M -t 10 -C -F 2 /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o /$OUTDIR/jellyfish/k${m}test.jf
+# done
+
+for m in 19 21 23 25 27 29 31; do
+  jellyfish histo -t 10 $OUTDIR/jellyfish/k${m}test.jf -o /$OUTDIR/jellyfish/k${m}test.histo
+done
+
+#download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
+
+################TESTING SECTION ABOVE################
+
+################SECTION BELOW IS BROKEN################
+
+#assemble the  genome using Illumina short reads with ABySS
 # mkdir /scratch/srb67793/G_maculatum/abyss/
 
 # abyss-pe name=g_maculatum k=96 B=2G /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
@@ -67,16 +87,3 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 # 	done
 # done
 # abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
-
-# #kmer analysis with Jellyfish
-# mkdir $OUTDIR/jellyfish
-# gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
-for m in 19 21 23 25 27 29 31; do
-  jellyfish count -m $m -s 100M -t 10 -C -F 2 /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o /$OUTDIR/jellyfish/k${m}test.jf
-done
-
-# for m in 19 21 21 25 27 29 31; do
-#   jellyfish histo -t 10 $OUTDIR/jellyfish/k${m}test.jf -o /$OUTDIR/jellyfish/k${m}test.histo
-# done
-
-#download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
