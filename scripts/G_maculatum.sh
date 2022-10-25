@@ -124,11 +124,23 @@ module load GenomeScope/1.0-foss-2019b-R-4.0.0
 #   jellyfish histo -t 10 $OUTDIR/jellyfish/k${m}test.jf -o /$OUTDIR/jellyfish/k${m}test.histo
 # done
 
-mkdir $OUTDIR/genomescope
-mkdir $OUTDIR/Xauthority
-for m in 19 21 23 25 27 29 31; do
-  xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out${m}.err -f /scratch/srb67793/test/Xauthority genomescope.R $OUTDIR/jellyfish/k${m}test.histo ${m} 100 $OUTDIR/genomescope 1000
-done
+# mkdir $OUTDIR/genomescope
+# mkdir $OUTDIR/Xauthority
+
+#probably need to run on interactive node because of X11 requirement for genomescope
+# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k19test.histo 19 100 $OUTDIR/genomescope/k19 1000
+#
+# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k21test.histo 21 100 $OUTDIR/genomescope/k21 1000
+#
+# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k23test.histo 23 100 $OUTDIR/genomescope/k23 1000
+#
+# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k25test.histo 25 100 $OUTDIR/genomescope/k25 1000
+#
+# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k27test.histo 27 100 $OUTDIR/genomescope/k27 1000
+#
+# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k29test.histo 29 100 $OUTDIR/genomescope/k29 1000
+#
+# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k31test.histo 31 100 $OUTDIR/genomescope/k31 1000
 
 ################TESTING SECTION BELOW ################
 
