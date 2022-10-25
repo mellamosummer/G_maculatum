@@ -25,9 +25,9 @@ fi
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-# module load ABySS/2.3.1-foss-2019b
+module load ABySS/2.3.1-foss-2019b
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
-module load Jellyfish/2.3.0-GCC-8.3.0
+# module load Jellyfish/2.3.0-GCC-8.3.0
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
 # mkdir $OUTDIR/FastQC
@@ -56,8 +56,6 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 
 ################NEED TO ANNOTATE PLASTOME##################################
 
-################currently working on this chunk of code################
-
 # # kmer analysis with Jellyfish for loop 19-32-mers
 # mkdir $OUTDIR/jellyfish
 # gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
@@ -66,28 +64,77 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 #   jellyfish count -m $m -s 100M -t 10 -C -F 2 /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o /$OUTDIR/jellyfish/k${m}test.jf
 # done
 
-for m in 19 21 23 25 27 29 31; do
-  jellyfish histo -t 10 $OUTDIR/jellyfish/k${m}test.jf -o /$OUTDIR/jellyfish/k${m}test.histo
-done
+# for m in 19 21 23 25 27 29 31; do
+#   jellyfish histo -t 10 $OUTDIR/jellyfish/k${m}test.jf -o /$OUTDIR/jellyfish/k${m}test.histo
+# done
 
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
-
-################TESTING SECTION ABOVE################
 
 ################SECTION BELOW IS BROKEN################
 
 #assemble the  genome using Illumina short reads with ABySS
 # mkdir /scratch/srb67793/G_maculatum/abyss/
 
-# abyss-pe name=g_maculatum k=96 B=2G /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
-#
+abyss-pe name=/scratch/srb67793/G_maculatum/abyss/g_maculatum k=96 B=2G in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+
 # for kc in 2 3; do
 # 	for k in `seq 50 8 90`; do
-		# mkdir $OUTDIR/abyss/k${k}-kc${kc}
-# 		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=g_maculatum B=2G k=$k kc=$kc /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq
+# 		mkdir $OUTDIR/abyss/k${k}-kc${kc}
+# 		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=/scratch/srb67793/G_maculatum/abyss/g_maculatum B=2G k=$k kc=$kc in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
 # 	done
 # done
 # abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
 
-#QUAST Test script
-#quast.py -o $OUTDIR/quast -t 10 $OUTDIR/canu/ecoli.contigs.fasta
+# QUAST Test script
+# quast.py -o $OUTDIR/quast -t 10 $OUTDIR/canu/ecoli.contigs.fasta
+#
+#
+# Meraculous
+#
+# nohup run_meraculous.sh -c ../data/meraculous.config &> ../data/run_merc_nohup.out &
+# ###################################
+# #
+# #  Meraculous params file
+# #
+# ###################################
+#
+#
+# #######################################
+# #
+# # Basic parameters
+# #
+# ########################################
+#
+#
+#
+# # Describe the libraries ( one line per library )
+# # lib_seq [ wildcard ][ prefix ][ insAvg ][ insSdev ][ avgReadLen ][ hasInnieArtifact ][ isRevComped ][ useForContigging ][ onoSetId ][ useForGapClosing ][ 5pWiggleRoom ][3pWiggleRoom]
+# #
+#
+# lib_seq	/n/projects/dut/a_tess/meraculous_assembly/data/read_trimming/s_*_1_*.paired_trimmed.fastq.gz,/n/projects/dut/a_tess/meraculous_assembly/data/read_trimming/s_*_2_*.paired_trimmed.fastq.gz  FRA  500  100   251 0 0	  1 1 1  0 0
+#
+# genome_size   3.15
+#
+# diploid_mode	0
+#
+# mer_size 127
+#
+# min_depth_cutoff	3
+#
+# num_prefix_blocks 1
+#
+#
+# #################################################
+# #
+# # Advanced parameters
+# #
+# #################################################
+#
+# no_read_validation 0
+#
+# use_cluster 0
+#
+# local_num_procs       30
+#
+# local_max_retries		  1
+#
