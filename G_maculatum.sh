@@ -126,10 +126,6 @@
 
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
 
-####################################################################
-# 5) ANALYZES K-MER DISTRIBUTION
-####################################################################
-
 ################TESTING SECTION BELOW ################
 
 ####################################################################
