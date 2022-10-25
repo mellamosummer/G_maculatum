@@ -47,7 +47,7 @@
 ##################################
 
 #set output directory variable
-# OUTDIR="/scratch/srb67793/G_maculatum"
+OUTDIR="/scratch/srb67793/G_maculatum"
 
 #if output directory doesn't exist, create it
 
