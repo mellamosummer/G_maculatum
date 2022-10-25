@@ -13,7 +13,7 @@ Term Project
 UGA GACRC - Sapelo2  
 
 **About**  
-This repository contains the scripts & results for analyzing Illumina shotgun sequencing data for Geranium maculatum. Leaf tissue was collected by Dr.Shu-Mei Chang (SMC). DNA was extracted using a Qiagen kit by Summer Blanco (SB) & SMC. Library preparation & sequencing was done by Novogene. Bioinformatics analyses conducted by SB.  
+This repository contains the scripts & results for analyzing Illumina shotgun sequencing data for Geranium maculatum. Leaf tissue was collected by Dr.Shu-Mei Chang (SMC). DNA was extracted using a Qiagen kit by Summer Blanco (SB) & SMC. Library preparation & sequencing was done by Novogene. Bioinformatics analyses were conducted by SB with guidance from Dr. Jim Leebens-Mack, Dr. Casey Bergman, and Jingxuan Chen.
 
 **Pipeline:**
 1) FastQC & MultiQC pre-trim
