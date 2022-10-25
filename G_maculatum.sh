@@ -25,9 +25,10 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-module load ABySS/2.3.1-foss-2019b
+# module load ABySS/2.3.1-foss-2019b
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
+module load GenomeScope/1.0-foss-2019b-R-4.0.0
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
 # mkdir $OUTDIR/FastQC
@@ -69,6 +70,9 @@ module load ABySS/2.3.1-foss-2019b
 # done
 
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
+
+mkdir /scratch/srb67793/G_maculatum/jellyfish/k19
+genomescope.R /scratch/srb67793/G_maculatum/jellyfish/k19test.histo 19 100 kmer_max=1000 /scratch/srb67793/G_maculatum/jellyfish/k19
 
 ################TESTING SECTION BELOW IS BROKEN################
 
