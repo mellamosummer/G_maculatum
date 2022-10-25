@@ -71,7 +71,7 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 # #kmer analysis with Jellyfish
 # mkdir $OUTDIR/jellyfish
 # gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
-for m in 19 21 21 25 27 29 31; do
+for m in 19 21 23 25 27 29 31; do
   jellyfish count -m $m -s 100M -t 10 -C -F 2 /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o /$OUTDIR/jellyfish/k${m}test.jf
 done
 
