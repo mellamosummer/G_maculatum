@@ -14,10 +14,10 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 
 #if output directory doesn't exist, create it
 
-if [ ! -d $OUTDIR ]
-then
-    mkdir -p $OUTDIR
-fi
+# if [ ! -d $OUTDIR ]
+# then
+#     mkdir -p $OUTDIR
+# fi
 #
 #
 # load modules
@@ -70,70 +70,24 @@ module load ABySS/2.3.1-foss-2019b
 
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
 
-################SECTION BELOW IS BROKEN################
+################TESTING SECTION BELOW IS BROKEN################
 
 #assemble the  genome using Illumina short reads with ABySS
 # mkdir /scratch/srb67793/G_maculatum/abyss/
-# abyss-pe k=31 j=10 in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
 
-for kc in 2 3; do
-	for k in `seq 50 8 90`; do
-		mkdir $OUTDIR/abyss/k${k}-kc${kc}
-		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=g_maculatum B=2G k=$k kc=$kc in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
-	done
-done
+##Test k & c parameter range
+# for kc in 2 3; do
+# 	for k in `seq 50 8 90`; do
+# 		mkdir $OUTDIR/abyss/k${k}-kc${kc}
+# 		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=g_maculatum B=2G k=$k kc=$kc in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+# 	done
+# done
 # abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
 
 # QUAST Test script
-# quast.py -o $OUTDIR/quast -t 10 $OUTDIR/canu/ecoli.contigs.fasta
-#
-#
-# Meraculous
-#
-# nohup run_meraculous.sh -c ../data/meraculous.config &> ../data/run_merc_nohup.out &
-# ###################################
-# #
-# #  Meraculous params file
-# #
-# ###################################
-#
-#
-# #######################################
-# #
-# # Basic parameters
-# #
-# ########################################
-#
-#
-#
-# # Describe the libraries ( one line per library )
-# # lib_seq [ wildcard ][ prefix ][ insAvg ][ insSdev ][ avgReadLen ][ hasInnieArtifact ][ isRevComped ][ useForContigging ][ onoSetId ][ useForGapClosing ][ 5pWiggleRoom ][3pWiggleRoom]
-# #
-#
-# lib_seq	/n/projects/dut/a_tess/meraculous_assembly/data/read_trimming/s_*_1_*.paired_trimmed.fastq.gz,/n/projects/dut/a_tess/meraculous_assembly/data/read_trimming/s_*_2_*.paired_trimmed.fastq.gz  FRA  500  100   251 0 0	  1 1 1  0 0
-#
-# genome_size   3.15
-#
-# diploid_mode	0
-#
-# mer_size 127
-#
-# min_depth_cutoff	3
-#
-# num_prefix_blocks 1
-#
-#
-# #################################################
-# #
-# # Advanced parameters
-# #
-# #################################################
-#
-# no_read_validation 0
-#
-# use_cluster 0
-#
-# local_num_procs       30
-#
-# local_max_retries		  1
-#
+# for file in $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa; do
+#   quast.py -o $OUTDIR/quast -t 10 $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
+# done
+
+#Run abyss with optimum kmer size
+# abyss-pe k=# j=10 in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
