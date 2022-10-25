@@ -9,6 +9,42 @@
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
 
+##################################
+
+#SUMMER BLANCO
+#PHD STUDENT, PLANT BIOLOGY
+#LEEBENS-MACK & CHANG LABS
+#UNIVERSITY OF GEORGIA
+
+#APPLIED GENOME ANALYSIS FALL 2022
+#TERM PROJECT
+#SAPELO2
+
+##################################
+
+#THIS SCRIPT:
+#1) TRIMS G MACULATUM ILLUMINA SHORT READS -- DONE
+#2) QC'S G MACULATUM ILLUMINA SHORT READS  -- DONE
+#3) ASSEMBLES PLASTOME -- DONE
+#4) ANNOTATES PLASTOME -- NEED TO FIGURE OUT WHAT SOFTWARE TO USE -- PHIL SUGGESTS PGA
+#5) ANALYZES K-MER DISTRIBUTION -- DONE
+#5) ASSEMBLES NUCLEAR GENOME -- TESTING SPADES & ABYSS CURRENTLY
+#5) EVALUATES GENOME ASSEMBLY -- WAITING FOR GENOME ASSEMBLY, CODE WRITTEN THOUGH
+
+# CODING QUESTIONS:
+# WHAT IS THE RANGE OF KMERS THAT I SHOULD TEST WITH JELLYFISH?
+# GENOMESCOPE ONLINE IS NOT WORKING FOR ME. I CAN'T GET IT WORKING ON THE CLUSTER EITHER.
+# CAN YOU HELP TROUBLESHOOT THIS? I HAVE HISTOGRAMS FOR 19 21 23 25 27 29 31-MERS
+# HOW DO I DETERMINE FROM THE KMER ANALYSES WHAT KMER SIZE TO USE FOR ASSEMBLY?
+
+# RESEARCH QUESTIONS:
+# WHAT DO YOU DO WITH AN ASSEMBLED PLASTOME? -- NOT SURE WHAT TO INTERPRET FROM THIS
+  #CAN WE MAKE A PHYLOGENY INCLUDING G MACULATUM WITH AVAILABLE PLASTOMES NOW?
+# HOW DO YOU INTERPRET THE KMER FIGURES? 
+
+##################################
+
+
 #set output directory variable
 OUTDIR="/scratch/srb67793/G_maculatum"
 
@@ -75,11 +111,11 @@ module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # mkdir /scratch/srb67793/G_maculatum/jellyfish/k19
 # genomescope.R /scratch/srb67793/G_maculatum/jellyfish/k19test.histo 19 100 kmer_max=1000 /scratch/srb67793/G_maculatum/jellyfish/k19
 
-################TESTING SECTION BELOW IS BROKEN################
-
-mkdir $OUTDIR/spades
-
-spades.py -t 10 -k 21,33,55,77 --isolate --memory 950 --pe1-1 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq --pe1-2 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o $OUTDIR/spades
+################TESTING SECTION BELOW ################
+#
+# mkdir $OUTDIR/spades
+#
+# spades.py -t 10 -k 21,33,55,77 --isolate --memory 950 --pe1-1 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq --pe1-2 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o $OUTDIR/spades
 
 #assemble the  genome using Illumina short reads with ABySS
 # mkdir /scratch/srb67793/G_maculatum/abyss/
