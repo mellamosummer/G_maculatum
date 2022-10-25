@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=G_maculatum                   # Job name
-#SBATCH --partition=highmem_p                        # Partition (queue) name
+#SBATCH --partition=batch                        # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
 #SBATCH --cpus-per-task=10	                            # Number of cores per taskT
 #SBATCH --mem=950gb	                                # Total memory for job
