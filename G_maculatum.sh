@@ -65,7 +65,7 @@
 # module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
-# module load GenomeScope/1.0-foss-2019b-R-4.0.0
+module load GenomeScope/1.0-foss-2019b-R-4.0.0
 
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
@@ -124,7 +124,9 @@
 #   jellyfish histo -t 10 $OUTDIR/jellyfish/k${m}test.jf -o /$OUTDIR/jellyfish/k${m}test.histo
 # done
 
-#download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
+mkdir $OUTDIR/genomescope
+for m in 19 21 23 25 27 29 31; do
+  xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out${m}.err -f /scratch/srb67793/test/Xauthority genomescope.R /$OUTDIR/jellyfish/k${m}test.histo ${m} 100 /$OUTDIR/jellyfish/ 1000
 
 ################TESTING SECTION BELOW ################
 
