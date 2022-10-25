@@ -6,12 +6,6 @@ PhD Student, Department of Plant Biology
 Leebens-Mack & Chang Labs  
 University of Georgia  
 
-**Project Info**  
-Applied Genome Analysis  
-Fall Semester 2022 (10/2022)  
-Term Project  
-UGA GACRC - Sapelo2  
-
 **About**  
 This repository contains the scripts & results for analyzing Illumina shotgun sequencing data for Geranium maculatum. Leaf tissue was collected by Dr.Shu-Mei Chang (SMC). DNA was extracted using a Qiagen kit by Summer Blanco (SB) & SMC. Library preparation & sequencing was done by Novogene. Bioinformatics analyses were conducted by SB with guidance from Dr. Jim Leebens-Mack, Dr. Casey Bergman, and Jingxuan Chen.
 
@@ -76,3 +70,9 @@ Contains 5 files:
 -OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired_fastqc.html  
 
 MultiQC report contains summary for 2 trimmed read files.
+
+**Course Info**  
+Applied Genome Analysis  
+Fall Semester 2022 (10/2022)  
+Term Project  
+UGA GACRC - Sapelo2  
