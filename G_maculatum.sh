@@ -26,6 +26,7 @@ fi
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
 # module load ABySS/2.3.1-foss-2019b
+# module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 module load Jellyfish/2.3.0-GCC-8.3.0
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
@@ -87,3 +88,6 @@ done
 # 	done
 # done
 # abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
+
+#QUAST Test script
+#quast.py -o $OUTDIR/quast -t 10 $OUTDIR/canu/ecoli.contigs.fasta 
