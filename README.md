@@ -1,18 +1,18 @@
 # G_maculatum
 
-*Contact info*  
+**Contact info**
 Summer Blanco (summer.blanco@uga.edu)  
 PhD Student, Department of Plant Biology  
 Leebens-Mack & Chang Labs  
 University of Georgia  
 
-*Project Info*  
+**Project Info**  
 Applied Genome Analysis  
 Fall Semester 2022 (10/2022)  
 Term Project  
 UGA GACRC - Sapelo2  
 
-*Pipeline:*
+**Pipeline:**
 1) FastQC & MultiQC pre-trim
 2) Trimmomatic
 3) FastQC & MultiQC post-trim
@@ -21,3 +21,53 @@ UGA GACRC - Sapelo2
 6) Jellyfish & GenomeScope
 7) SPAdes & ABySS
 8) QUAST
+
+**File structure**
+*genomescope*  
+Contains 7 folders: k19,	k21, k23, k25, k27, k29, k31  
+Each folder contains:  
+-model.txt
+-plot.log.png (GenomeScope visualization)
+-plot.png (GenomeScope visualization)
+-progress.txt
+-summary.txt
+
+*jellyfish_histograms*  
+Contains 7 files:  
+-19test.histo  
+-k21test.histo  
+-k23test.histo  
+-k25test.histo  
+-k27test.histo  
+-k29test.histo  
+-k31test.histo  
+
+Each file used with GenomeScope to generate kmer visualization.
+
+*plastome*  
+Contains 1 file:  
+embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta
+
+File contains sequences for scaffolds.
+
+*pretrimQC*  
+Contains 5 files:  
+-OT1_CKDN220054653-1A_HF33VDSX5_L1_1_fastqc.html  
+-OT1_CKDN220054653-1A_HF33VDSX5_L1_2_fastqc.html  
+-multiqc_report.html  
+-OT1_CKDN220054653-1A_HF33VDSX5_L1_1_fastqc.zip  
+-OT1_CKDN220054653-1A_HF33VDSX5_L1_2_fastqc.zip  
+
+MultiQC report contains summary for 2 read files.
+
+*scripts*  
+Contains 1 file:  
+-G_maculatum.sh
+
+*trimmedQC*  
+Contains 5 files:  
+-OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired_fastqc.html  
+-OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_unpaired_fastqc.html  
+-OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_unpaired_fastqc.html  
+-multiqc_report.html  
+-OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired_fastqc.html  
