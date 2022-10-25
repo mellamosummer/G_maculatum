@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=G_maculatum                   # Job name
-#SBATCH --partition=batch                         # Partition (queue) name
+#SBATCH --partition=highmem_p                        # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
 #SBATCH --cpus-per-task=10	                            # Number of cores per taskT
-#SBATCH --mem=250gb	                                # Total memory for job
+#SBATCH --mem=950gb	                                # Total memory for job
 #SBATCH --time=96:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
@@ -26,9 +26,10 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
 # module load ABySS/2.3.1-foss-2019b
+module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
-module load GenomeScope/1.0-foss-2019b-R-4.0.0
+# module load GenomeScope/1.0-foss-2019b-R-4.0.0
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
 # mkdir $OUTDIR/FastQC
@@ -71,10 +72,14 @@ module load GenomeScope/1.0-foss-2019b-R-4.0.0
 
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
 
-mkdir /scratch/srb67793/G_maculatum/jellyfish/k19
-genomescope.R /scratch/srb67793/G_maculatum/jellyfish/k19test.histo 19 100 kmer_max=1000 /scratch/srb67793/G_maculatum/jellyfish/k19
+# mkdir /scratch/srb67793/G_maculatum/jellyfish/k19
+# genomescope.R /scratch/srb67793/G_maculatum/jellyfish/k19test.histo 19 100 kmer_max=1000 /scratch/srb67793/G_maculatum/jellyfish/k19
 
 ################TESTING SECTION BELOW IS BROKEN################
+
+mkdir $OUTDIR/spades
+
+spades.py -t 10 -k 21,33,55,77 --isolate --memory 950 --pe1-1 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq --pe1-2 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o $OUTDIR/spades
 
 #assemble the  genome using Illumina short reads with ABySS
 # mkdir /scratch/srb67793/G_maculatum/abyss/
