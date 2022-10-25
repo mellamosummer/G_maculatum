@@ -3,7 +3,7 @@
 #SBATCH --partition=batch                        # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
 #SBATCH --cpus-per-task=10	                            # Number of cores per taskT
-#SBATCH --mem=950gb	                                # Total memory for job
+#SBATCH --mem=250gb	                                # Total memory for job
 #SBATCH --time=96:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
