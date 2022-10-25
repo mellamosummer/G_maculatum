@@ -90,4 +90,4 @@ done
 # abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
 
 #QUAST Test script
-#quast.py -o $OUTDIR/quast -t 10 $OUTDIR/canu/ecoli.contigs.fasta 
+#quast.py -o $OUTDIR/quast -t 10 $OUTDIR/canu/ecoli.contigs.fasta
