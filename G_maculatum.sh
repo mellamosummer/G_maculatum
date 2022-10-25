@@ -75,7 +75,7 @@ module load ABySS/2.3.1-foss-2019b
 #assemble the  genome using Illumina short reads with ABySS
 # mkdir /scratch/srb67793/G_maculatum/abyss/
 
-abyss-pe name=/scratch/srb67793/G_maculatum/abyss/g_maculatum k=96 B=2G in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+abyss-pe k=31 j=10 in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
 
 # for kc in 2 3; do
 # 	for k in `seq 50 8 90`; do
