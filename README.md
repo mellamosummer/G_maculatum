@@ -1,6 +1,6 @@
 # G_maculatum
 
-**Contact info**
+**Contact info**  
 Summer Blanco (summer.blanco@uga.edu)  
 PhD Student, Department of Plant Biology  
 Leebens-Mack & Chang Labs  
@@ -12,6 +12,9 @@ Fall Semester 2022 (10/2022)
 Term Project  
 UGA GACRC - Sapelo2  
 
+**About**  
+This repository contains the scripts & results for analyzing Illumina shotgun sequencing data for Geranium maculatum. Leaf tissue was collected by Dr.Shu-Mei Chang (SMC). DNA was extracted using a Qiagen kit by Summer Blanco (SB). Library preparation & sequencing was done by Novogene. Bioinformatics analyses conducted by SB.  
+
 **Pipeline:**
 1) FastQC & MultiQC pre-trim
 2) Trimmomatic
@@ -22,15 +25,15 @@ UGA GACRC - Sapelo2
 7) SPAdes & ABySS
 8) QUAST
 
-**File structure**
+**File structure**  
 *genomescope*  
 Contains 7 folders: k19,	k21, k23, k25, k27, k29, k31  
 Each folder contains:  
--model.txt
--plot.log.png (GenomeScope visualization)
--plot.png (GenomeScope visualization)
--progress.txt
--summary.txt
+-model.txt  
+-plot.log.png (GenomeScope visualization)  
+-plot.png (GenomeScope visualization)  
+-progress.txt  
+-summary.txt  
 
 *jellyfish_histograms*  
 Contains 7 files:  
@@ -58,7 +61,7 @@ Contains 5 files:
 -OT1_CKDN220054653-1A_HF33VDSX5_L1_1_fastqc.zip  
 -OT1_CKDN220054653-1A_HF33VDSX5_L1_2_fastqc.zip  
 
-MultiQC report contains summary for 2 read files.
+MultiQC report contains summary for 2 raw read files.
 
 *scripts*  
 Contains 1 file:  
@@ -71,3 +74,5 @@ Contains 5 files:
 -OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_unpaired_fastqc.html  
 -multiqc_report.html  
 -OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired_fastqc.html  
+
+MultiQC report contains summary for 2 trimmed read files.
