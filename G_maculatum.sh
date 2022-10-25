@@ -28,8 +28,8 @@
 #3) ASSEMBLES PLASTOME -- DONE
 #4) ANNOTATES PLASTOME -- NEED TO FIGURE OUT WHAT SOFTWARE TO USE -- PHIL SUGGESTS PGA
 #5) ANALYZES K-MER DISTRIBUTION -- DONE
-#5) ASSEMBLES NUCLEAR GENOME -- TESTING SPADES & ABYSS CURRENTLY
-#5) EVALUATES GENOME ASSEMBLY -- WAITING FOR GENOME ASSEMBLY, CODE WRITTEN THOUGH
+#6) ASSEMBLES NUCLEAR GENOME -- TESTING SPADES & ABYSS CURRENTLY
+#7) EVALUATES GENOME ASSEMBLY -- WAITING FOR GENOME ASSEMBLY, CODE WRITTEN THOUGH
 
 # CODING QUESTIONS:
 # WHAT IS THE RANGE OF KMERS THAT I SHOULD TEST WITH JELLYFISH?
@@ -43,7 +43,8 @@
 # HOW DO YOU INTERPRET THE KMER FIGURES?
 
 ##################################
-
+# SET UP
+##################################
 
 #set output directory variable
 # OUTDIR="/scratch/srb67793/G_maculatum"
@@ -55,7 +56,6 @@
 #     mkdir -p $OUTDIR
 # fi
 #
-#
 # load modules
 # module load FastQC/0.11.9-Java-11
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
@@ -66,6 +66,10 @@
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/1.0-foss-2019b-R-4.0.0
+
+####################################################################
+# 1) TRIMS G MACULATUM ILLUMINA SHORT READS
+####################################################################
 
 # #QC pre-trim with FASTQC & MultiQC (took ~1 hr)
 # mkdir $OUTDIR/FastQC
@@ -83,16 +87,30 @@
 # $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_unpaired.fq.gz \
 # ILLUMINACLIP:$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE-2.fa:2:30:10 \
 # LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-#
+
+####################################################################
+# 2) QC'S G MACULATUM ILLUMINA SHORT READS
+####################################################################
+
 # #QC post-trim with FASTQC & MultiQC
 # mkdir $OUTDIR/FastQC/trimmed
 # fastqc -o $OUTDIR/FastQC/trimmed/ $OUTDIR/trimmomatic/*paired.fq.gz
 # multiqc $OUTDIR/FastQC/trimmed/*.zip
 
+####################################################################
+# 3) ASSEMBLES PLASTOME
+####################################################################
+
 # assemble plastome
 # get_organelle_from_reads.py -t 8 -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -F embplant_pt -o $OUTDIR/plastome_GetOrganelle
 
-################NEED TO ANNOTATE PLASTOME##################################
+####################################################################
+# 4) NEED TO ANNOTATE PLASTOME
+####################################################################
+
+####################################################################
+# 5) ANALYZES K-MER DISTRIBUTION
+####################################################################
 
 # # kmer analysis with Jellyfish for loop 19-32-mers
 # mkdir $OUTDIR/jellyfish
@@ -108,11 +126,16 @@
 
 #download to local computer and upload reads.hist to genome scope kmer analysis or with findGSE (https://github.com/schneebergerlab/findGSE) in R
 
-# mkdir /scratch/srb67793/G_maculatum/jellyfish/k19
-# genomescope.R /scratch/srb67793/G_maculatum/jellyfish/k19test.histo 19 100 kmer_max=1000 /scratch/srb67793/G_maculatum/jellyfish/k19
+####################################################################
+# 5) ANALYZES K-MER DISTRIBUTION
+####################################################################
 
 ################TESTING SECTION BELOW ################
-#
+
+####################################################################
+# 6) ASSEMBLES NUCLEAR GENOME (testing spades & abyss)
+####################################################################
+
 # mkdir $OUTDIR/spades
 #
 # spades.py -t 10 -k 21,33,55,77 --isolate --memory 950 --pe1-1 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq --pe1-2 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o $OUTDIR/spades
@@ -129,10 +152,14 @@
 # done
 # abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
 
+#Run abyss with optimum kmer size
+# abyss-pe k=# j=10 in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
+
+####################################################################
+# 7) EVALUATES GENOME ASSEMBLY
+####################################################################
+
 # QUAST Test script
 # for file in $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa; do
 #   quast.py -o $OUTDIR/quast -t 10 $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
 # done
-
-#Run abyss with optimum kmer size
-# abyss-pe k=# j=10 in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
