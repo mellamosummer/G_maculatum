@@ -1,0 +1,14 @@
+GenomeScope version 2.0
+input file = /scratch/srb67793/G_maculatum/jellyfish/k29test.histo
+output directory = /scratch/srb67793/G_maculatum/genomescope2/k29
+p = 2
+k = 29
+
+property                      min               max               
+Homozygous (aa)               93.91%            95.8278%          
+Heterozygous (ab)             4.17225%          6.09%             
+Genome Haploid Length         1,208,790,469 bp  1,239,420,147 bp  
+Genome Repeat Length          911,477,739 bp    934,573,775 bp    
+Genome Unique Length          297,312,731 bp    304,846,371 bp    
+Model Fit                     32.8159%          86.9866%          
+Read Error Rate               0.791965%         0.791965%         
