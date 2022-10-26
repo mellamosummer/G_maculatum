@@ -126,13 +126,13 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 #   mkdir $OUTDIR/genomescope2/k${k}
 #   genomescope.R -i /scratch/srb67793/G_maculatum/jellyfish/k${k}test.histo -o /scratch/srb67793/G_maculatum/genomescope2/k${k} -k $k
 # done
-conda activate smudge_env
-mkdir $OUTDIR/smudgeplot
+# conda activate smudge_env
+# mkdir $OUTDIR/smudgeplot
 for k in 19 ; do
-  mkdir $OUTDIR/smudgeplot/k${k}
-  L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
-  U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-  jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+  # mkdir $OUTDIR/smudgeplot/k${k}
+  # L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  # U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  # jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
   smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
 done
 ################TESTING SECTION BELOW ################
