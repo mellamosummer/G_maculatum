@@ -64,7 +64,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load ABySS/2.3.1-foss-2019b
 # module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
-# module load Jellyfish/2.3.0-GCC-8.3.0
+module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
 
 ####################################################################
@@ -130,9 +130,9 @@ conda activate smudge_env
 # mkdir $OUTDIR/smudgeplot
 for k in 19 ; do
   # mkdir $OUTDIR/smudgeplot/k${k}
-  # L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
-  # U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-  # jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+  L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  jellyfish dump -t 10 -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
   smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
 done
 ################TESTING SECTION BELOW ################
