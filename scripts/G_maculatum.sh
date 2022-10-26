@@ -126,7 +126,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 #   mkdir $OUTDIR/genomescope2/k${k}
 #   genomescope.R -i /scratch/srb67793/G_maculatum/jellyfish/k${k}test.histo -o /scratch/srb67793/G_maculatum/genomescope2/k${k} -k $k
 # done
-# conda activate smudge_env
+conda activate smudge_env
 # mkdir $OUTDIR/smudgeplot
 for k in 19 ; do
   # mkdir $OUTDIR/smudgeplot/k${k}
