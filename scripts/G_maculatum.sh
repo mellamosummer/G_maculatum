@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=G_maculatum                   # Job name
-#SBATCH --partition=batch                        # Partition (queue) name
+#SBATCH --partition=highmem_p                        # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
 #SBATCH --cpus-per-task=10	                            # Number of cores per taskT
-#SBATCH --mem=250gb	                                # Total memory for job
-#SBATCH --time=6:00:00  		                            # Time limit hrs:min:sec
+#SBATCH --mem=950gb	                                # Total memory for job
+#SBATCH --time=96:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -130,9 +130,9 @@ conda activate smudge_env
 # mkdir $OUTDIR/smudgeplot
 for k in 19 ; do
   # mkdir $OUTDIR/smudgeplot/k${k}
-  L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
-  U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-  jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+  # L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  # U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  # jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
   smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
 done
 ################TESTING SECTION BELOW ################
