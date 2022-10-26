@@ -65,7 +65,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
-module load GenomeScope/1.0-foss-2019b-R-4.0.0
+module load GenomeScope/2.0-foss-2020b-R-4.2.1
 
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
@@ -124,23 +124,11 @@ module load GenomeScope/1.0-foss-2019b-R-4.0.0
 #   jellyfish histo -t 10 $OUTDIR/jellyfish/k${m}test.jf -o /$OUTDIR/jellyfish/k${m}test.histo
 # done
 
-# mkdir $OUTDIR/genomescope
-# mkdir $OUTDIR/Xauthority
-
-#probably need to run on interactive node because of X11 requirement for genomescope
-# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k19test.histo 19 100 $OUTDIR/genomescope/k19 1000
-#
-# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k21test.histo 21 100 $OUTDIR/genomescope/k21 1000
-#
-# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k23test.histo 23 100 $OUTDIR/genomescope/k23 1000
-#
-# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k25test.histo 25 100 $OUTDIR/genomescope/k25 1000
-#
-# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k27test.histo 27 100 $OUTDIR/genomescope/k27 1000
-#
-# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k29test.histo 29 100 $OUTDIR/genomescope/k29 1000
-#
-# xvfb-run --auto-servernum --server-num=1 -s "-screen 0 10000x10000x8" -e /home/srb67793/G_maculatum_novogene/out.err -f $OUTDIR/Xauthority genomescope.R $OUTDIR/jellyfish/k31test.histo 31 100 $OUTDIR/genomescope/k31 1000
+mkdir $OUTDIR/genomescope2
+for k in 19 21 23 25 27 29 31; do
+  mkdir $OUTDIR/genomescope2/k${k}
+  genomescope.R -i /scratch/srb67793/G_maculatum/jellyfish/k${k}test.histo -o /scratch/srb67793/G_maculatum/genomescope2/k${k} -k $k
+done
 
 ################TESTING SECTION BELOW ################
 
