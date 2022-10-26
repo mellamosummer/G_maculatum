@@ -2,9 +2,9 @@
 #SBATCH --job-name=G_maculatum                   # Job name
 #SBATCH --partition=highmem_p                        # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
-#SBATCH --cpus-per-task=10	                            # Number of cores per taskT
+#SBATCH --cpus-per-task=8	                            # Number of cores per taskT
 #SBATCH --mem=950gb	                                # Total memory for job
-#SBATCH --time=96:00:00  		                            # Time limit hrs:min:sec
+#SBATCH --time=24:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -27,7 +27,7 @@
 #2) QC'S G MACULATUM ILLUMINA SHORT READS  -- DONE
 #3) ASSEMBLES PLASTOME -- DONE
 #4) ANNOTATES PLASTOME -- NEED TO FIGURE OUT WHAT SOFTWARE TO USE -- PHIL SUGGESTS PGA
-#5) ANALYZES K-MER DISTRIBUTION -- DONE
+#5) ANALYZES K-MER DISTRIBUTION -- DONE, TESTING SMUDGEPLOT
 #6) ASSEMBLES NUCLEAR GENOME -- TESTING SPADES
 #7) EVALUATES GENOME ASSEMBLY -- WAITING FOR GENOME ASSEMBLY, CODE WRITTEN
 
@@ -64,7 +64,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load ABySS/2.3.1-foss-2019b
 # module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
-module load Jellyfish/2.3.0-GCC-8.3.0
+# module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
 
 ####################################################################
@@ -126,15 +126,19 @@ module load Jellyfish/2.3.0-GCC-8.3.0
 #   mkdir $OUTDIR/genomescope2/k${k}
 #   genomescope.R -i /scratch/srb67793/G_maculatum/jellyfish/k${k}test.histo -o /scratch/srb67793/G_maculatum/genomescope2/k${k} -k $k
 # done
+
+#MEMORY INTENSIVE#
 conda activate smudge_env
 # mkdir $OUTDIR/smudgeplot
-for k in 19 ; do
-  # mkdir $OUTDIR/smudgeplot/k${k}
-  # L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
-  # U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-  # jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+for k in 20 ; do
+  mkdir $OUTDIR/smudgeplot/k${k}
+  L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
   smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
 done
+
+#test log on high mem 15083330
 ################TESTING SECTION BELOW ################
 
 ####################################################################
