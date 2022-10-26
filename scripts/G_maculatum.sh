@@ -132,7 +132,7 @@ for k in 19 ; do
   # mkdir $OUTDIR/smudgeplot/k${k}
   L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
   U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-  jellyfish dump -t 10 -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+  jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
   smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
 done
 ################TESTING SECTION BELOW ################
