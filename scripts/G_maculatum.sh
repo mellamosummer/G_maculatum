@@ -28,8 +28,8 @@
 #3) ASSEMBLES PLASTOME -- DONE
 #4) ANNOTATES PLASTOME -- NEED TO FIGURE OUT WHAT SOFTWARE TO USE -- PHIL SUGGESTS PGA
 #5) ANALYZES K-MER DISTRIBUTION -- DONE
-#6) ASSEMBLES NUCLEAR GENOME -- TESTING SPADES & ABYSS CURRENTLY
-#7) EVALUATES GENOME ASSEMBLY -- WAITING FOR GENOME ASSEMBLY, CODE WRITTEN THOUGH
+#6) ASSEMBLES NUCLEAR GENOME -- TESTING SPADES
+#7) EVALUATES GENOME ASSEMBLY -- WAITING FOR GENOME ASSEMBLY, CODE WRITTEN
 
 # CODING QUESTIONS:
 # WHAT IS THE RANGE OF KMERS THAT I SHOULD TEST WITH JELLYFISH?
@@ -64,8 +64,8 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load ABySS/2.3.1-foss-2019b
 # module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
-# module load Jellyfish/2.3.0-GCC-8.3.0
-module load GenomeScope/2.0-foss-2020b-R-4.2.1
+module load Jellyfish/2.3.0-GCC-8.3.0
+# module load GenomeScope/2.0-foss-2020b-R-4.2.1
 
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
@@ -112,24 +112,29 @@ module load GenomeScope/2.0-foss-2020b-R-4.2.1
 # 5) ANALYZES K-MER DISTRIBUTION
 ####################################################################
 
-# # kmer analysis with Jellyfish for loop 19-32-mers
+# # kmer analysis with Jellyfish for loop 19-31-mers
 # mkdir $OUTDIR/jellyfish
 # gunzip $OUTDIR/trimmomatic/*_paired.fq.gz
 #
 # for m in 19 21 23 25 27 29 31; do
 #   jellyfish count -m $m -s 100M -t 10 -C -F 2 /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /$OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o /$OUTDIR/jellyfish/k${m}test.jf
-# done
-
-# for m in 19 21 23 25 27 29 31; do
 #   jellyfish histo -t 10 $OUTDIR/jellyfish/k${m}test.jf -o /$OUTDIR/jellyfish/k${m}test.histo
 # done
 
-mkdir $OUTDIR/genomescope2
-for k in 19 21 23 25 27 29 31; do
-  mkdir $OUTDIR/genomescope2/k${k}
-  genomescope.R -i /scratch/srb67793/G_maculatum/jellyfish/k${k}test.histo -o /scratch/srb67793/G_maculatum/genomescope2/k${k} -k $k
-done
+# mkdir $OUTDIR/genomescope2
+# for k in 19 21 23 25 27 29 31; do
+#   mkdir $OUTDIR/genomescope2/k${k}
+#   genomescope.R -i /scratch/srb67793/G_maculatum/jellyfish/k${k}test.histo -o /scratch/srb67793/G_maculatum/genomescope2/k${k} -k $k
+# done
 
+conda activate smudge_env
+# mkdir $OUTDIR/smudgeplot
+for k in 19 21 23 25 27 29 31; do
+  mkdir $OUTDIR/smudgeplot/k${k}
+  L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  jellyfish dump -c -L $L -U $U $OUTDIR/k${k}test.jf | smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k}
+done
 ################TESTING SECTION BELOW ################
 
 ####################################################################
@@ -139,21 +144,6 @@ done
 # mkdir $OUTDIR/spades
 #
 # spades.py -t 10 -k 21,33,55,77 --isolate --memory 950 --pe1-1 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq --pe1-2 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o $OUTDIR/spades
-
-#assemble the  genome using Illumina short reads with ABySS
-# mkdir /scratch/srb67793/G_maculatum/abyss/
-
-##Test k & c parameter range
-# for kc in 2 3; do
-# 	for k in `seq 50 8 90`; do
-# 		mkdir $OUTDIR/abyss/k${k}-kc${kc}
-# 		abyss-pe -C $OUTDIR/abyss/k${k}-kc${kc} name=g_maculatum B=2G k=$k kc=$kc in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
-# 	done
-# done
-# abyss-fac $OUTDIR/abyss/k*/g_maculatum-scaffolds.fa
-
-#Run abyss with optimum kmer size
-# abyss-pe k=# j=10 in='/scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq'
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
