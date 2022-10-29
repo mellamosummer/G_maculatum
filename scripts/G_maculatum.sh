@@ -3,8 +3,8 @@
 #SBATCH --partition=highmem_p                        # Partition (queue) name
 #SBATCH --ntasks=1			                                # Single task job
 #SBATCH --cpus-per-task=8	                            # Number of cores per taskT
-#SBATCH --mem=950gb	                                # Total memory for job
-#SBATCH --time=24:00:00  		                            # Time limit hrs:min:sec
+#SBATCH --mem=400gb	                                # Total memory for job
+#SBATCH --time=48:00:00  		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -62,7 +62,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
 # module load ABySS/2.3.1-foss-2019b
-# module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
+module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
@@ -76,8 +76,8 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # mkdir $OUTDIR/FastQC/pretrim
 # fastqc -o $OUTDIR/FastQC/pretrim/ /home/srb67793/G_maculatum/*.gz
 # multiqc $OUTDIR/FastQC/pretrim/*.zip -o $OUTDIR/FastQC/pretrim/
-
-#trim reads with trimmomatic
+#
+# trim reads with trimmomatic
 # java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar PE  -threads 4 \
 # /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz \
 # /home/srb67793/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz \
@@ -127,17 +127,6 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 #   genomescope.R -i /scratch/srb67793/G_maculatum/jellyfish/k${k}test.histo -o /scratch/srb67793/G_maculatum/genomescope2/k${k} -k $k
 # done
 
-#MEMORY INTENSIVE#
-conda activate smudge_env
-# mkdir $OUTDIR/smudgeplot
-for k in 20 ; do
-  mkdir $OUTDIR/smudgeplot/k${k}
-  L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
-  U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-  jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
-  smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
-done
-
 #test log on high mem 15083330
 ################TESTING SECTION BELOW ################
 
@@ -148,6 +137,8 @@ done
 # mkdir $OUTDIR/spades
 #
 # spades.py -t 10 -k 21,33,55,77 --isolate --memory 950 --pe1-1 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq --pe1-2 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o $OUTDIR/spades
+
+spades.py -t 10 --restart-from k77 -o $OUTDIR/spades
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
