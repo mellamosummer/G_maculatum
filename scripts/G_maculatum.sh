@@ -142,7 +142,7 @@ blastn -num_threads 2 -query $OUTDIR/plastome_GetOrganelle/embplant_pt.K115.scaf
 which run_meraculous.sh
 /apps/eb/Meraculous/2.2.6/bin/run_meraculous.sh
 source activate ${EBROOTMERACULOUS}
-run_meraculous.sh -c G_maculatum.config -label test -dir $OUTDIR/meraculous/test -cleanup_level 0
+run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts -label test -dir $OUTDIR/meraculous/test -cleanup_level 0
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
