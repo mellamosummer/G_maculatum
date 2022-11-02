@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=G_maculatum                   # Job name
 #SBATCH --partition=highmem_p                        # Partition (queue) name
-#SBATCH --ntasks=1			                                # Single task job
+#SBATCH --ntasks=4			                                # Single task job
 #SBATCH --cpus-per-task=8	                            # Number of cores per taskT
 #SBATCH --mem=400gb	                                # Total memory for job
 #SBATCH --time=48:00:00  		                            # Time limit hrs:min:sec
@@ -27,7 +27,7 @@
 #2) QC'S G MACULATUM ILLUMINA SHORT READS  -- DONE
 #3) ASSEMBLES PLASTOME -- DONE
 #4) ANNOTATES PLASTOME -- NEED TO FIGURE OUT WHAT SOFTWARE TO USE -- PHIL SUGGESTS PGA
-#5) ANALYZES K-MER DISTRIBUTION -- DONE, TESTING SMUDGEPLOT
+#5) ANALYZES K-MER DISTRIBUTION -- DONE
 #6) ASSEMBLES NUCLEAR GENOME -- TESTING SPADES
 #7) EVALUATES GENOME ASSEMBLY -- WAITING FOR GENOME ASSEMBLY, CODE WRITTEN
 
@@ -61,11 +61,11 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-# module load ABySS/2.3.1-foss-2019b
-module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
+# module load BLAST+/2.9.0-gompi-2019b
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
+ml Meraculous/2.2.6
 
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
@@ -108,6 +108,13 @@ module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # 4) NEED TO ANNOTATE PLASTOME
 ####################################################################
 
+# BLAST plastome results
+blastn -num_threads 2 -query $OUTDIR/plastome_GetOrganelle/embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta \
+       -db /db/ncbiblast/nt/06042020/nt \
+       -out $OUTDIR/plastome_GetOrganelle/embplant_pt.K115.fa.blastn.${SLURM_JOB_ID}.tsv \
+       -outfmt 6 \
+       -max_target_seqs 2
+
 ####################################################################
 # 5) ANALYZES K-MER DISTRIBUTION
 ####################################################################
@@ -122,23 +129,20 @@ module load SPAdes/3.14.1-GCC-8.3.0-Python-3.7.4
 # done
 
 # mkdir $OUTDIR/genomescope2
-# for k in 19 21 23 25 27 29 31; do
+# for k in 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63 65 67 69 71; do
 #   mkdir $OUTDIR/genomescope2/k${k}
 #   genomescope.R -i /scratch/srb67793/G_maculatum/jellyfish/k${k}test.histo -o /scratch/srb67793/G_maculatum/genomescope2/k${k} -k $k
 # done
-
-#test log on high mem 15083330
-################TESTING SECTION BELOW ################
 
 ####################################################################
 # 6) ASSEMBLES NUCLEAR GENOME (testing spades & abyss)
 ####################################################################
 
-# mkdir $OUTDIR/spades
-#
-# spades.py -t 10 -k 21,33,55,77 --isolate --memory 950 --pe1-1 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq --pe1-2 /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -o $OUTDIR/spades
-
-spades.py -t 10 --restart-from k77 -o $OUTDIR/spades
+# mkdir $OUTDIR/meraculous
+which run_meraculous.sh
+/apps/eb/Meraculous/2.2.6/bin/run_meraculous.sh
+source activate ${EBROOTMERACULOUS}
+run_meraculous.sh -c G_maculatum.config -label test -dir $OUTDIR/meraculous/test -cleanup_level 0
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
