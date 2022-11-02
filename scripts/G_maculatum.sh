@@ -109,11 +109,11 @@ ml Meraculous/2.2.6
 ####################################################################
 
 # BLAST plastome results
-blastn -num_threads 2 -query $OUTDIR/plastome_GetOrganelle/embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta \
-       -db /db/ncbiblast/nt/06042020/nt \
-       -out $OUTDIR/plastome_GetOrganelle/embplant_pt.K115.fa.blastn.${SLURM_JOB_ID}.tsv \
-       -outfmt 6 \
-       -max_target_seqs 2
+# blastn -num_threads 2 -query $OUTDIR/plastome_GetOrganelle/embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta \
+#        -db /db/ncbiblast/nt/06042020/nt \
+#        -out $OUTDIR/plastome_GetOrganelle/embplant_pt.K115.fa.blastn.${SLURM_JOB_ID}.tsv \
+#        -outfmt 6 \
+#        -max_target_seqs 2
 
 ####################################################################
 # 5) ANALYZES K-MER DISTRIBUTION
