@@ -138,7 +138,8 @@ ml Meraculous/2.2.6
 # 6) ASSEMBLES NUCLEAR GENOME (testing spades & abyss)
 ####################################################################
 
-# mkdir $OUTDIR/meraculous
+mkdir $OUTDIR/meraculous
+mkdir $OUTDIR/meraculous/test
 which run_meraculous.sh
 /apps/eb/Meraculous/2.2.6/bin/run_meraculous.sh
 source activate ${EBROOTMERACULOUS}
