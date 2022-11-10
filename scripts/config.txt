@@ -1,0 +1,36 @@
+Project:
+-----------------------
+Project name          = Test
+Type                  = chloro
+Genome Range          = 120000-200000
+K-mer                 = 33
+Max memory            =
+Extended log          = 0
+Save assembled reads  = no
+Seed Input            = /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta
+Extend seed directly  = no
+Reference sequence    =
+Variance detection    =
+Chloroplast sequence  =
+
+Dataset 1:
+-----------------------
+Read Length           = 150
+Insert size           = 300
+Platform              = illumina
+Single/Paired         = PE
+Combined reads        =
+Forward reads         = /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq
+Reverse reads         = /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq
+Store Hash            =
+
+Heteroplasmy:
+-----------------------
+MAF                   =
+HP exclude list       =
+PCR-free              = yes
+
+Optional:
+-----------------------
+Use Quality Scores   = yes
+Output path          = /scratch/srb67793/G_maculatum/novoplasty/

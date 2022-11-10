@@ -60,7 +60,8 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load FastQC/0.11.9-Java-11
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
-module load GetOrganelle/1.7.5.2-foss-2020b
+# module load GetOrganelle/1.7.5.2-foss-2020b
+module load NOVOPlasty/4.2-GCCcore-8.3.0
 # module load BLAST+/2.9.0-gompi-2019b
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
@@ -102,7 +103,10 @@ module load GetOrganelle/1.7.5.2-foss-2020b
 ####################################################################
 
 # assemble plastome
-get_organelle_from_reads.py -t 8 -w 99 -R 20 -s /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -F embplant_pt -o $OUTDIR/plastome_GetOrganelle2
+# get_organelle_from_reads.py -t 8 -w 99 -R 20 -s /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -F embplant_pt -o $OUTDIR/plastome_GetOrganelle2
+
+mkdir $OUTDIR/novoplasty
+NOVOPlasty4.2.pl -c config.txt
 
 ####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
