@@ -102,7 +102,7 @@ module load GetOrganelle/1.7.5.2-foss-2020b
 ####################################################################
 
 # assemble plastome
-get_organelle_from_reads.py -t 8 -s /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -F embplant_pt -o $OUTDIR/plastome_GetOrganelle2
+get_organelle_from_reads.py -t 8 -s /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -F embplant_pt -o $OUTDIR/plastome_GetOrganelle2
 
 ####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
