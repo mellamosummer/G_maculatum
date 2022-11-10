@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=G_maculatum                   # Job name
-#SBATCH --partition=highmem_p                        # Partition (queue) name
+#SBATCH --partition=batch                        # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=16
-#SBATCH --mem=220gb
-#SBATCH --time=160:00:00		                            # Time limit hrs:min:sec
+#SBATCH --mem=100gb
+#SBATCH --time=12:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -60,12 +60,12 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load FastQC/0.11.9-Java-11
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
-# module load GetOrganelle/1.7.5.2-foss-2020b
+module load GetOrganelle/1.7.5.2-foss-2020b
 # module load BLAST+/2.9.0-gompi-2019b
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
-ml Meraculous/2.2.6
+# ml Meraculous/2.2.6
 
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
@@ -102,7 +102,7 @@ ml Meraculous/2.2.6
 ####################################################################
 
 # assemble plastome
-# get_organelle_from_reads.py -t 8 -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -F embplant_pt -o $OUTDIR/plastome_GetOrganelle
+get_organelle_from_reads.py -t 8 -s /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq.gz -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq.gz -F embplant_pt -o $OUTDIR/plastome_GetOrganelle2
 
 ####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
@@ -138,12 +138,12 @@ ml Meraculous/2.2.6
 # 6) ASSEMBLES NUCLEAR GENOME (testing spades & abyss)
 ####################################################################
 
-mkdir $OUTDIR/meraculous
-mkdir $OUTDIR/meraculous/test
-which run_meraculous.sh
-/apps/eb/Meraculous/2.2.6/bin/run_meraculous.sh
-source activate ${EBROOTMERACULOUS}
-run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir $OUTDIR/meraculous/test -cleanup_level 0
+# mkdir $OUTDIR/meraculous
+# mkdir $OUTDIR/meraculous/test
+# which run_meraculous.sh
+# /apps/eb/Meraculous/2.2.6/bin/run_meraculous.sh
+# source activate ${EBROOTMERACULOUS}
+# run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir $OUTDIR/meraculous/test -cleanup_level 0
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
