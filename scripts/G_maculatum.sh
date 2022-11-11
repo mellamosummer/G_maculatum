@@ -104,9 +104,9 @@ module load NOVOPlasty/4.2-GCCcore-8.3.0
 
 # assemble plastome
 # get_organelle_from_reads.py -t 8 -w 99 -R 20 -s /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq -F embplant_pt -o $OUTDIR/plastome_GetOrganelle2
-
-mkdir $OUTDIR/novoplasty
-NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
+#
+# mkdir $OUTDIR/novoplasty
+# NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
 
 ####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
@@ -142,12 +142,12 @@ NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
 # 6) ASSEMBLES NUCLEAR GENOME (testing spades & abyss)
 ####################################################################
 
-# mkdir $OUTDIR/meraculous
-# mkdir $OUTDIR/meraculous/test
-# which run_meraculous.sh
-# /apps/eb/Meraculous/2.2.6/bin/run_meraculous.sh
-# source activate ${EBROOTMERACULOUS}
-# run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir $OUTDIR/meraculous/test -cleanup_level 0
+mkdir $OUTDIR/meraculous
+mkdir $OUTDIR/meraculous/test
+which run_meraculous.sh
+/apps/eb/Meraculous/2.2.6/bin/run_meraculous.sh
+source activate ${EBROOTMERACULOUS}
+run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir $OUTDIR/meraculous/test -cleanup_level 0
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
