@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=G_maculatum                   # Job name
 #SBATCH --partition=highmem_p                        # Partition (queue) name
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=6
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=16
 #SBATCH --mem=220gb
 #SBATCH --time=160:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
