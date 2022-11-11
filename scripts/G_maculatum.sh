@@ -61,12 +61,12 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-module load NOVOPlasty/4.2-GCCcore-8.3.0
+# module load NOVOPlasty/4.2-GCCcore-8.3.0
 # module load BLAST+/2.9.0-gompi-2019b
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
-# ml Meraculous/2.2.6
+ml Meraculous/2.2.6
 
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
