@@ -66,7 +66,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
-ml Meraculous/2.2.6
+# ml Meraculous/2.2.6
 
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
@@ -120,6 +120,24 @@ ml Meraculous/2.2.6
 #        -out $OUTDIR/plastome_GetOrganelle/embplant_pt.K115.fa.blastn.${SLURM_JOB_ID}.tsv \
 #        -outfmt 6 \
 #        -max_target_seqs 2
+####################################################################
+# 4) smudgeplot test
+####################################################################
+
+conda activate smudge_env
+# mkdir $OUTDIR/smudgeplot
+# for k in 19 21 23 25 27 29 31; do
+#   mkdir $OUTDIR/smudgeplot/k${k}
+#   L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+#   U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+#   jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf | smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k}
+for k in 19 ; do
+  # mkdir $OUTDIR/smudgeplot/k${k}
+  # L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  # U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  # jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+  smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+done
 
 ####################################################################
 # 5) ANALYZES K-MER DISTRIBUTION
@@ -146,8 +164,8 @@ ml Meraculous/2.2.6
 
 # mkdir $OUTDIR/meraculous
 # mkdir $OUTDIR/meraculous/test
-source activate ${EBROOTMERACULOUS}
-run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/test -cleanup_level 1
+# source activate ${EBROOTMERACULOUS}
+# run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/test -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
