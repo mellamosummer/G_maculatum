@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=G_maculatum                   # Job name
-#SBATCH --partition=batch                        # Partition (queue) name
+#SBATCH --partition=highmem_p                        # Partition (queue) name
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=6
-#SBATCH --mem=100gb
-#SBATCH --time=12:00:00		                            # Time limit hrs:min:sec
+#SBATCH --mem=220gb
+#SBATCH --time=160:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
