@@ -1,6 +1,6 @@
 Project:
 -----------------------
-Project name          = /scratch/srb67793/G_maculatum/novoplasty/Test
+Project name          = NovoTest
 Type                  = chloro
 Genome Range          = 120000-200000
 K-mer                 = 33
@@ -16,21 +16,22 @@ Chloroplast sequence  =
 Dataset 1:
 -----------------------
 Read Length           = 150
-Insert size           = 300
+Insert size           = 350
 Platform              = illumina
 Single/Paired         = PE
 Combined reads        =
 Forward reads         = /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq
 Reverse reads         = /scratch/srb67793/G_maculatum/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq
-Store Hash            = no
+Store Hash            =
 
 Heteroplasmy:
 -----------------------
 MAF                   =
 HP exclude list       =
-PCR-free              = yes
+PCR-free              =
 
 Optional:
 -----------------------
-Use Quality Scores   = yes
+Insert size auto     = yes
+Use Quality Scores   =
 Output path          = /scratch/srb67793/G_maculatum/novoplasty
