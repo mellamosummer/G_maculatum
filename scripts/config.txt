@@ -1,6 +1,6 @@
 Project:
 -----------------------
-Project name          = Test
+Project name          = /scratch/srb67793/G_maculatum/novoplasty/Test
 Type                  = chloro
 Genome Range          = 120000-200000
 K-mer                 = 33
