@@ -33,4 +33,3 @@ PCR-free              = yes
 Optional:
 -----------------------
 Use Quality Scores   = yes
-Output path          = /scratch/srb67793/G_maculatum/novoplasty/
