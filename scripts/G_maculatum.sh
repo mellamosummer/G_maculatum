@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=G_maculatum                   # Job name
-#SBATCH --partition=batch                  # Partition (queue) name
+#SBATCH --job-name=smudgeplot                   # Job name
+#SBATCH --partition=highmem_p                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=8
-#SBATCH --mem=150gb
-#SBATCH --time=160:00:00		                            # Time limit hrs:min:sec
+#SBATCH --mem=600gb
+#SBATCH --time=24:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -61,7 +61,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-module load NOVOPlasty/4.2-GCCcore-8.3.0
+# module load NOVOPlasty/4.2-GCCcore-8.3.0
 # module load BLAST+/2.9.0-gompi-2019b
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
@@ -107,7 +107,7 @@ module load NOVOPlasty/4.2-GCCcore-8.3.0
 #
 # mkdir $OUTDIR/novoplasty
 # cd $OUTDIR/novoplasty #need to be in directory for some reason
-NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
+# NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
 # cd /home/srb67793/G_maculatum_novogene
 
 ####################################################################
@@ -124,20 +124,20 @@ NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
 # 4) smudgeplot test
 ####################################################################
 
-# conda activate smudge_env
+conda activate smudge_env
 # # mkdir $OUTDIR/smudgeplot
 # # for k in 19 21 23 25 27 29 31; do
 # #   mkdir $OUTDIR/smudgeplot/k${k}
 # #   L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
 # #   U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
 # #   jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf | smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k}
-# for k in 19 ; do
-#   # mkdir $OUTDIR/smudgeplot/k${k}
-#   # L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
-#   # U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-#   # jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
-#   smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
-# done
+for k in 19 ; do
+  # mkdir $OUTDIR/smudgeplot/k${k}
+  # L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  # U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  # jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+  smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+done
 
 ####################################################################
 # 5) ANALYZES K-MER DISTRIBUTION
