@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=novo35                   # Job name
+#SBATCH --job-name=novo37                   # Job name
 #SBATCH --partition=batch                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=8
