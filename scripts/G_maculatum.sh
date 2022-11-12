@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=smudgeplot                   # Job name
+#SBATCH --job-name=novo21                   # Job name
 #SBATCH --partition=batch                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=8
