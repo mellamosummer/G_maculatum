@@ -3,7 +3,7 @@ Project:
 Project name          = NovoTest
 Type                  = chloro
 Genome Range          = 120000-200000
-K-mer                 =21
+K-mer                 =23
 Max memory            = 100
 Extended log          = 1
 Save assembled reads  = no
