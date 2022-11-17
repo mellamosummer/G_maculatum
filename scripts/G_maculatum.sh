@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=meraculous_plusGNUcondatest                  # Job name
+#SBATCH --job-name=meraculous_resume                  # Job name
 #SBATCH --partition=batch                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=6
 #SBATCH --mem=100gb
-#SBATCH --time=1:00:00		                            # Time limit hrs:min:sec
+#SBATCH --time=100:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -194,7 +194,6 @@ ml Meraculous/2.2.6
 
 # mkdir $OUTDIR/meraculous
 # mkdir $OUTDIR/meraculous/test
-source activate gnuplot
 source activate ${EBROOTMERACULOUS}
 run_meraculous.sh  -resume  -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/test -cleanup_level 1
 
