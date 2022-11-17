@@ -195,7 +195,7 @@ ml Meraculous/2.2.6
 # mkdir $OUTDIR/meraculous
 # mkdir $OUTDIR/meraculous/test
 source activate ${EBROOTMERACULOUS}
-run_meraculous.sh  -resume  -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/test -cleanup_level 1
+run_meraculous.sh  -resume  -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
