@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=meraculous_resume                  # Job name
-#SBATCH --partition=batch                  # Partition (queue) name
+#SBATCH --job-name=smudgeplottest                  # Job name
+#SBATCH --partition=highmem_p                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=6
-#SBATCH --mem=100gb
+#SBATCH --mem=950gb
 #SBATCH --time=100:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
@@ -154,20 +154,20 @@ ml Meraculous/2.2.6
 # 4) smudgeplot test
 ####################################################################
 
-# conda activate smudge_env
+conda activate smudge_env
 # # mkdir $OUTDIR/smudgeplot
 # # for k in 19 21 23 25 27 29 31; do
 # #   mkdir $OUTDIR/smudgeplot/k${k}
 # #   L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
 # #   U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
 # #   jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf | smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k}
-# for k in 19 ; do
-#   mkdir $OUTDIR/smudgeplot/k${k}
-#   L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
-#   U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-#   jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
-#   smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
-# done
+for k in 19 ; do
+  # mkdir $OUTDIR/smudgeplot/k${k}
+  L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+  smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+done
 
 ####################################################################
 # 5) ANALYZES K-MER DISTRIBUTION
@@ -193,9 +193,9 @@ ml Meraculous/2.2.6
 ####################################################################
 
 # mkdir $OUTDIR/meraculous
-# mkdir $OUTDIR/meraculous/test
-source activate ${EBROOTMERACULOUS}
-run_meraculous.sh  -resume  -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/run_2022-11-11_13h23m14s -cleanup_level 1
+# # mkdir $OUTDIR/meraculous/test
+# source activate ${EBROOTMERACULOUS}
+# run_meraculous.sh  -resume  -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/run_2022-11-11_13h23m14s -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
