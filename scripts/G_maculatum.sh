@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=novo37                   # Job name
-#SBATCH --partition=batch                  # Partition (queue) name
+#SBATCH --job-name=smudgeplot_highmemtest                   # Job name
+#SBATCH --partition=highmem_p                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=6
-#SBATCH --mem=100gb
-#SBATCH --time=12:00:00		                            # Time limit hrs:min:sec
+#SBATCH --mem=950gb
+#SBATCH --time=100:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -67,10 +67,10 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
 # ml Meraculous/2.2.6
-module load SRA-Toolkit/2.11.1-centos_linux64
-module load BWA/0.7.17-GCC-8.3.0
-module load SAMtools/1.10-GCC-8.3.0
-module load BCFtools/1.10.2-GCC-8.3.0
+# module load SRA-Toolkit/2.11.1-centos_linux64
+# module load BWA/0.7.17-GCC-8.3.0
+# module load SAMtools/1.10-GCC-8.3.0
+# module load BCFtools/1.10.2-GCC-8.3.0
 
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
@@ -118,26 +118,26 @@ module load BCFtools/1.10.2-GCC-8.3.0
 # 3) Maps trimmed reads to reference plastome
 ####################################################################
 
-mkdir $OUTDIR/mapping
-
-#Constructs a BWA index for the reference plastome
-bwa index /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta
-
-#Maps the E. coli C600 reads to the E. coli MG1655 refseq reference genome
-#stores the mapped reads in sorted .bam format
-bwa mem -t 6 /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq > $OUTDIR/mapping/G_maculatum.bam
-
-samtools sort $OUTDIR/mapping/G_maculatum.bam -o $OUTDIR/mapping/G_maculatum.sorted.bam
-
-samtools index -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam
-
-#Calls variants from (i) reads with mapping quality greater than 60, excludes variants that have a (ii) quality score of less than 40, and excludes variants that are (iii) supported by fewer than 10 reads for the E. coli C600 genome using `bcftools mpileup`, `bcftools call`, and `bcftools filter` (BCFtools/1.10.2-GCC-8.3.0):
-
-bcftools mpileup -Ou --threads 6 --min-MQ 60 -f /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta \
-$OUTDIR/mapping/G_maculatum.sorted.bam | bcftools call --threads 6 -mv -Ou \
---ploidy 1 | bcftools filter -Oz -e 'QUAL<40 || DP<10' > \
-$OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
-bcftools view $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
+# mkdir $OUTDIR/mapping
+#
+# #Constructs a BWA index for the reference plastome
+# bwa index /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta
+#
+# #Maps the E. coli C600 reads to the E. coli MG1655 refseq reference genome
+# #stores the mapped reads in sorted .bam format
+# # bwa mem -t 6 /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq > $OUTDIR/mapping/G_maculatum.bam
+#
+# samtools sort $OUTDIR/mapping/G_maculatum.bam -o $OUTDIR/mapping/G_maculatum.sorted.bam
+#
+# samtools index -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam
+#
+# #Calls variants from (i) reads with mapping quality greater than 60, excludes variants that have a (ii) quality score of less than 40, and excludes variants that are (iii) supported by fewer than 10 reads for the E. coli C600 genome using `bcftools mpileup`, `bcftools call`, and `bcftools filter` (BCFtools/1.10.2-GCC-8.3.0):
+#
+# bcftools mpileup -Ou --threads 6 --min-MQ 60 -f /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta \
+# $OUTDIR/mapping/G_maculatum.sorted.bam | bcftools call --threads 6 -mv -Ou \
+# --ploidy 1 | bcftools filter -Oz -e 'QUAL<40 || DP<10' > \
+# $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
+# bcftools view $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 
 
 ####################################################################
@@ -154,20 +154,20 @@ bcftools view $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf
 # 4) smudgeplot test
 ####################################################################
 
-# conda activate smudge_env
+conda activate smudge_env
 # mkdir $OUTDIR/smudgeplot
 # for k in 19 21 23 25 27 29 31; do
 #   mkdir $OUTDIR/smudgeplot/k${k}
 #   L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
 #   U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
 #   jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf | smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k}
-# for k in 19 ; do
-  # mkdir $OUTDIR/smudgeplot/k${k}
-  # L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
-  # U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
-  # jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
-#   smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
-# done
+for k in 19 ; do
+  mkdir $OUTDIR/smudgeplot/k${k}
+  L=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo L)
+  U=$(smudgeplot.py cutoff $OUTDIR/jellyfish/k${k}test.histo U)
+  jellyfish dump -c -L $L -U $U $OUTDIR/jellyfish/k${k}test.jf > $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+  smudgeplot.py hetkmers -o $OUTDIR/smudgeplot/k${k} $OUTDIR/smudgeplot/k${k}/k${k}testdump.jf
+done
 
 ####################################################################
 # 5) ANALYZES K-MER DISTRIBUTION
