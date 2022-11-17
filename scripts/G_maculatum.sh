@@ -121,11 +121,11 @@ module load BCFtools/1.10.2-GCC-8.3.0
 mkdir $OUTDIR/mapping
 
 #Constructs a BWA index for the reference plastome
-bwa index $OUTDIR/plastome/G_incanum_plastomesequence.fasta
+bwa index /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta
 
 #Maps the E. coli C600 reads to the E. coli MG1655 refseq reference genome
 #stores the mapped reads in sorted .bam format
-bwa mem -t 6 $OUTDIR/plastome/G_incanum_plastomesequence.fasta $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq > $OUTDIR/mapping/G_maculatum.bam
+bwa mem -t 6 /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq > $OUTDIR/mapping/G_maculatum.bam
 
 samtools sort $OUTDIR/mapping/G_maculatum.bam -o $OUTDIR/mapping/G_maculatum.sorted.bam
 
@@ -133,7 +133,7 @@ samtools index -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam
 
 #Calls variants from (i) reads with mapping quality greater than 60, excludes variants that have a (ii) quality score of less than 40, and excludes variants that are (iii) supported by fewer than 10 reads for the E. coli C600 genome using `bcftools mpileup`, `bcftools call`, and `bcftools filter` (BCFtools/1.10.2-GCC-8.3.0):
 
-bcftools mpileup -Ou --threads 6 --min-MQ 60 -f $OUTDIR/plastome/G_incanum_plastomesequence.fasta \
+bcftools mpileup -Ou --threads 6 --min-MQ 60 -f /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta \
 $OUTDIR/mapping/G_maculatum.sorted.bam | bcftools call --threads 6 -mv -Ou \
 --ploidy 1 | bcftools filter -Oz -e 'QUAL<40 || DP<10' > \
 $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
