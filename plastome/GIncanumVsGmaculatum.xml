@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Session genome="G_incanum_plastomesequence.fasta" locus="KT760575.1:49329-79194" version="8">
+<Session genome="G_incanum_plastomesequence.fasta" locus="KT760575.1:84610-100434" version="8">
     <Resources>
         <Resource path="../../../G_maculatum.sorted.bam" type="bam"/>
+        <Resource path="../../../G_incanum.gff" type="gff"/>
     </Resources>
-    <Panel height="1307" name="DataPanel" width="1423">
+    <Panel height="1175" name="DataPanel" width="1239">
+        <Track attributeKey="G_incanum.gff" clazz="org.broad.igv.track.FeatureTrack" fontSize="10" groupByStrand="false" id="/Users/summerblanco/Desktop/G_incanum.gff" name="G_incanum.gff" visible="true"/>
         <Track attributeKey="G_maculatum.sorted.bam Coverage" autoScale="true" clazz="org.broad.igv.sam.CoverageTrack" fontSize="10" height="240" id="/Users/summerblanco/Desktop/G_maculatum.sorted.bam_coverage" name="G_maculatum.sorted.bam Coverage" snpThreshold="0.2" visible="true">
-            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="407360.0" minimum="0.0" type="LINEAR"/>
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="90750.0" minimum="0.0" type="LINEAR"/>
         </Track>
         <Track attributeKey="G_maculatum.sorted.bam Junctions" clazz="org.broad.igv.sam.SpliceJunctionTrack" fontSize="10" groupByStrand="false" height="60" id="/Users/summerblanco/Desktop/G_maculatum.sorted.bam_junctions" name="G_maculatum.sorted.bam Junctions" visible="false"/>
         <Track attributeKey="G_maculatum.sorted.bam" clazz="org.broad.igv.sam.AlignmentTrack" color="185,185,185" displayMode="SQUISHED" experimentType="OTHER" fontSize="10" height="241" id="/Users/summerblanco/Desktop/G_maculatum.sorted.bam" name="G_maculatum.sorted.bam" visible="true">
             <RenderOptions/>
         </Track>
     </Panel>
-    <Panel height="87" name="FeaturePanel" width="1423">
+    <Panel height="122" name="FeaturePanel" width="1239">
         <Track attributeKey="Reference sequence" clazz="org.broad.igv.track.SequenceTrack" fontSize="10" height="51" id="Reference sequence" name="Reference sequence" sequenceTranslationStrandValue="POSITIVE" shouldShowTranslation="false" visible="true"/>
     </Panel>
-    <PanelLayout dividerFractions="0.8704225352112676"/>
+    <PanelLayout dividerFractions="0.7783595113438045"/>
     <HiddenAttributes>
         <Attribute name="DATA FILE"/>
         <Attribute name="DATA TYPE"/>

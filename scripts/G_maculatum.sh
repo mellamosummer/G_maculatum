@@ -119,11 +119,14 @@ ml Meraculous/2.2.6-foss-2019b-Perl-5.30.0
 ####################################################################
 
 # mkdir $OUTDIR/mapping
-#
+
+#on local computer
+#Geranium incanum plastid, complete genome KT760575.1
+#wget -O Desktop/G_incanum.gff "https://www.ncbi.nlm.nih.gov/sviewer/viewer.cgi?db=nuccore&report=gff3&id=KT760575.1"
 # #Constructs a BWA index for the reference plastome
 # bwa index /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta
 #
-# #Maps the E. coli C600 reads to the E. coli MG1655 refseq reference genome
+# #Maps the reads to the reference plastome
 # #stores the mapped reads in sorted .bam format
 # # bwa mem -t 6 /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq > $OUTDIR/mapping/G_maculatum.bam
 #
