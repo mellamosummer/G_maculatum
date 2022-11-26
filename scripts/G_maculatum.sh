@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=smudgeplottest                  # Job name
+#SBATCH --job-name=novoplastytest                 # Job name
 #SBATCH --partition=batch                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=16
@@ -61,7 +61,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load MultiQC/1.8-foss-2019b-Python-3.7.4
 # module load ml Trimmomatic/0.39-Java-1.8.0_144
 # module load GetOrganelle/1.7.5.2-foss-2020b
-# module load NOVOPlasty/4.2-GCCcore-8.3.0
+module load NOVOPlasty/4.2-GCCcore-8.3.0
 # module load BLAST+/2.9.0-gompi-2019b
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
@@ -111,12 +111,12 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 #
 # mkdir $OUTDIR/novoplasty
 # cd $OUTDIR/novoplasty #need to be in directory for some reason
-# NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
+NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
 # cd /home/srb67793/G_maculatum_novogene
-
-module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
-# mkdir $OUTDIR/FastPlast
-fast-plast.pl -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq --name $OUTDIR/FastPlast/G_maculatum –-threads 16 --bowtie_index Geraniaceae --coverage_analysis –-clean light
+#
+# module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
+# # mkdir $OUTDIR/FastPlast
+# fast-plast.pl -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq --name $OUTDIR/FastPlast/G_maculatum –-threads 16 --bowtie_index Geraniaceae --coverage_analysis –-clean light
 
 ####################################################################
 # 3) Maps trimmed reads to reference plastome
