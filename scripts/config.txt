@@ -9,7 +9,7 @@ Extended log          = 1
 Save assembled reads  = no
 Seed Input            = /home/srb67793/G_maculatum_novogene/plastome/Seed_RUBP_cp.fasta
 Extend seed directly  = no
-Reference sequence    = home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta
+Reference sequence    = /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta
 Variance detection    =
 Chloroplast sequence  =
 
