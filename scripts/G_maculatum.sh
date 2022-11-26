@@ -3,7 +3,7 @@
 #SBATCH --partition=batch                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=16
-#SBATCH --mem=100
+#SBATCH --mem=100gb
 #SBATCH --time=24:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
