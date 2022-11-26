@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=novoplastytest                 # Job name
-#SBATCH --partition=batch                  # Partition (queue) name
+#SBATCH --job-name=meraculoustest                 # Job name
+#SBATCH --partition=highmem_p                  # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=16
-#SBATCH --mem=100gb
+#SBATCH --mem=220gb
 #SBATCH --time=24:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
@@ -66,7 +66,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
-# ml Meraculous/2.2.6-foss-2019b-Perl-5.30.0
+ml Meraculous/2.2.6-foss-2019b-Perl-5.30.0
 # module load SRA-Toolkit/2.11.1-centos_linux64
 # module load BWA/0.7.17-GCC-8.3.0
 # module load SAMtools/1.10-GCC-8.3.0
@@ -114,9 +114,9 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
 # cd /home/srb67793/G_maculatum_novogene
 #
-module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
-# # mkdir $OUTDIR/FastPlast
-fast-plast.pl -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq --name $OUTDIR/FastPlast/G_maculatum –-threads 16 --bowtie_index Geraniaceae --coverage_analysis –-clean light
+# module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
+# # # mkdir $OUTDIR/FastPlast
+# fast-plast.pl -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq --name $OUTDIR/FastPlast/G_maculatum –-threads 16 --bowtie_index Geraniaceae --coverage_analysis –-clean light
 
 ####################################################################
 # 3) Maps trimmed reads to reference plastome
@@ -201,8 +201,8 @@ fast-plast.pl -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired
 
 # mkdir $OUTDIR/meraculous
 # # mkdir $OUTDIR/meraculous/test
-# source activate ${EBROOTMERACULOUS}
-# run_meraculous.sh  -resume  -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/run_2022-11-11_13h23m14s -cleanup_level 1
+source activate ${EBROOTMERACULOUS}
+run_meraculous.sh  -resume  -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/run_2022-11-11_13h23m14s -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
