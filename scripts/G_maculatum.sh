@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=fastplasttest                 # Job name
+#SBATCH --job-name=fastplasttest2                 # Job name
 #SBATCH --partition=batch                 # Partition (queue) name
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=16
@@ -72,6 +72,10 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load SAMtools/1.10-GCC-8.3.0
 # module load BCFtools/1.10.2-GCC-8.3.0
 
+#Raw reads are in jlm project directory
+#mkdir /scratch/G_maculatum/rawreads
+#On xfer node: scp -r /project/jlmlab/G_maculatum /scratch/G_maculatum/rawreads
+
 ####################################################################
 # 1) TRIMS G MACULATUM ILLUMINA SHORT READS
 ####################################################################
@@ -116,7 +120,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 #
 module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
 # # # mkdir $OUTDIR/FastPlast
-fast-plast.pl -1 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq -2 $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq --name $OUTDIR/FastPlast/G_maculatum –-threads 16 --bowtie_index Geraniaceae --coverage_analysis
+fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz -2 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz –-threads 16 --bowtie_index Geraniaceae --coverage_analysis
 
 ####################################################################
 # 3) Maps trimmed reads to reference plastome
