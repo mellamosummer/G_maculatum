@@ -4,7 +4,7 @@
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=16
 #SBATCH --mem=220gb
-#SBATCH --time=24:00:00		                            # Time limit hrs:min:sec
+#SBATCH --time=160:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -202,7 +202,7 @@ ml Meraculous/2.2.6-foss-2019b-Perl-5.30.0
 # mkdir $OUTDIR/meraculous
 # # mkdir $OUTDIR/meraculous/test
 source activate ${EBROOTMERACULOUS}
-run_meraculous.sh  -restart -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/run_2022-11-11_13h23m14s -cleanup_level 1
+run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/test -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
