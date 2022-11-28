@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=fastplasttest2                 # Job name
 #SBATCH --partition=batch                 # Partition (queue) name
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16
 #SBATCH --mem=100gb
 #SBATCH --time=24:00:00		                            # Time limit hrs:min:sec
@@ -120,7 +120,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 #
 module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
 # # # mkdir $OUTDIR/FastPlast
-fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz -2 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz –-threads 16 --bowtie_index Geraniaceae --coverage_analysis
+fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz -2 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz –-threads 16 --bowtie_index Geraniales --coverage_analysis
 
 ####################################################################
 # 3) Maps trimmed reads to reference plastome
