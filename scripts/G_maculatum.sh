@@ -155,6 +155,20 @@ fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_
 # samtools stats -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam > $OUTDIR/mapping/stats_G_maculatum.txt
 
 ####################################################################
+# PLASTOME MUMMER PLOTS
+####################################################################
+
+mkdir $OUTDIR/novomummer
+nucmer /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/novoplasty/Contigs_1_NovoTest.fasta -p $OUTDIR/novomummer/nucmer
+delta-filter -1 $OUTDIR/novomummer/nucmer.delta > $OUTDIR/novomummer/nucmer.1delta
+mummerplot --size large -layout --color -f --png $OUTDIR/novomummer/nucmer.1delta -p $OUTDIR/novomummer/nucmer
+
+
+mkdir $OUTDIR/GOmummer
+nucmer /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/plastome_GetOrganelle2/embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta -p $OUTDIR/GOmummer/nucmer
+delta-filter -1 $OUTDIR/GOmummer/nucmer.delta > $OUTDIR/GOmummer/nucmer.1delta
+mummerplot --size large -layout --color -f --png $OUTDIR/GOmummer/nucmer.1delta -p $OUTDIR/GOmummer/nucmer
+####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
 ####################################################################
 
