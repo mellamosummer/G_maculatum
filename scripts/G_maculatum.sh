@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=meraculoustest                 # Job name
-#SBATCH --partition=highmem_p                # Partition (queue) name
+#SBATCH --job-name=mappingstats                 # Job name
+#SBATCH --partition=batch                # Partition (queue) name
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=200gb
-#SBATCH --time=168:00:00		                            # Time limit hrs:min:sec
+#SBATCH --cpus-per-task=6
+#SBATCH --mem=100gb
+#SBATCH --time=24:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -67,10 +67,10 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
-ml Meraculous/2.2.6
+# ml Meraculous/2.2.6
 # module load SRA-Toolkit/2.11.1-centos_linux64
 # module load BWA/0.7.17-GCC-8.3.0
-# module load SAMtools/1.10-GCC-8.3.0
+module load SAMtools/1.10-GCC-8.3.0
 # module load BCFtools/1.10.2-GCC-8.3.0
 
 #Raw reads are in jlm project directory
@@ -151,6 +151,8 @@ ml Meraculous/2.2.6
 # $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 # bcftools view $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 
+samtools flagstat -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam -O flagstat_G_maculatum.tsv
+samtools stats -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam -O stat_G_maculatum.tsv
 
 ####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
@@ -207,7 +209,7 @@ ml Meraculous/2.2.6
 # mkdir $OUTDIR/meraculous
 # # mkdir $OUTDIR/meraculous/test
 # source activate ${EBROOTMERACULOUS}
-run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/test -cleanup_level 1
+# run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/test -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
