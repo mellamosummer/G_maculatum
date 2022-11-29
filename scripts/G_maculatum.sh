@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=mappingstats                 # Job name
-#SBATCH --partition=batch                # Partition (queue) name
+#SBATCH --job-name=fastplasttetst                 # Job name
+#SBATCH --partition=highmem_p                # Partition (queue) name
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=6
-#SBATCH --mem=100gb
-#SBATCH --time=24:00:00		                            # Time limit hrs:min:sec
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=220gb
+#SBATCH --time=48:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
 #SBATCH --mail-type=END,FAIL                          # Mail events (BEGIN, END, FAIL, ALL)
@@ -70,7 +70,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # ml Meraculous/2.2.6
 # module load SRA-Toolkit/2.11.1-centos_linux64
 # module load BWA/0.7.17-GCC-8.3.0
-module load SAMtools/1.10-GCC-8.3.0
+# module load SAMtools/1.10-GCC-8.3.0
 # module load BCFtools/1.10.2-GCC-8.3.0
 
 #Raw reads are in jlm project directory
@@ -119,9 +119,9 @@ module load SAMtools/1.10-GCC-8.3.0
 # NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
 # cd /home/srb67793/G_maculatum_novogene
 #
-# module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
-# # # mkdir $OUTDIR/FastPlast
-# fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz -2 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz –-threads 16 --bowtie_index Geraniales --coverage_analysis
+module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
+# # mkdir $OUTDIR/FastPlast
+fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz -2 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz –-threads 16 --bowtie_index Geraniales --coverage_analysis
 
 ####################################################################
 # 3) Maps trimmed reads to reference plastome
@@ -151,8 +151,8 @@ module load SAMtools/1.10-GCC-8.3.0
 # $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 # bcftools view $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 
-samtools flagstat -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam > $OUTDIR/mapping/flagstat_G_maculatum.txt
-samtools stats -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam > $OUTDIR/mapping/stats_G_maculatum.txt
+# samtools flagstat -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam > $OUTDIR/mapping/flagstat_G_maculatum.txt
+# samtools stats -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam > $OUTDIR/mapping/stats_G_maculatum.txt
 
 ####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
