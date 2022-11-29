@@ -151,8 +151,8 @@ module load SAMtools/1.10-GCC-8.3.0
 # $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 # bcftools view $OUTDIR/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 
-samtools flagstat -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam -O flagstat_G_maculatum.tsv
-samtools stats -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam -O stat_G_maculatum.tsv
+samtools flagstat -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam > $OUTDIR/mapping/flagstat_G_maculatum.txt
+samtools stats -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam > $OUTDIR/mapping/stats_G_maculatum.txt
 
 ####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
