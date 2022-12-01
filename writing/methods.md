@@ -20,6 +20,8 @@ Raw Illumina reads from _G. maculatum_ were used as input for whole genome assem
 
 The chloroplast genome was assembled using NOVOPlasty (citation) using the _G. incanum_ chloroplast genome (KT760575.1) as a reference and the _Zea mays_ chloroplast gene for the large subunit of RUBP as a seed.
 
+Raw reads wrere mapped to the _G. incanum_ chloroplast genome using SAMtools/BCFtools (citation) and visualized in IGV (citation).
+
 ## Data access
 
 All shotgun reads (will be) depostited into the Short Read Archive (accession #). Scripts and results of this analysis can be found at https://github.com/mellamosummer/G_maculatum_novogene. 
