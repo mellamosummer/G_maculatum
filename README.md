@@ -13,10 +13,10 @@ This repository contains the scripts & results for analyzing Illumina shotgun se
 1) FastQC & MultiQC pre-trim
 2) Trimmomatic
 3) FastQC & MultiQC post-trim
-4) GetOrganelle
-5) PAG?
-6) Jellyfish & GenomeScope
-7) SPAdes & ABySS
+4) Jellyfish & GenomeScope
+5) GetOrganelle & NOVOPlasty
+6) SAMtools/BCFtools & IGV
+7) Meraculous
 8) QUAST
 
 **File structure**  
