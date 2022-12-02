@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=fastplasttetst                 # Job name
-#SBATCH --partition=highmem_p                # Partition (queue) name
+#SBATCH --job-name=meraculoustest                # Job name
+#SBATCH --partition=batch                # Partition (queue) name
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=220gb
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=300gb
 #SBATCH --time=48:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
@@ -55,7 +55,7 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # module load QUAST/5.0.2-foss-2019b-Python-3.7.4
 # module load Jellyfish/2.3.0-GCC-8.3.0
 # module load GenomeScope/2.0-foss-2020b-R-4.2.1
-# ml Meraculous/2.2.6
+ml Meraculous/2.2.6
 # module load SRA-Toolkit/2.11.1-centos_linux64
 # module load BWA/0.7.17-GCC-8.3.0
 # module load SAMtools/1.10-GCC-8.3.0
@@ -107,9 +107,9 @@ OUTDIR="/scratch/srb67793/G_maculatum"
 # NOVOPlasty4.2.pl -c /home/srb67793/G_maculatum_novogene/scripts/config.txt
 # cd /home/srb67793/G_maculatum_novogene
 #
-module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
+# module load Fast-Plast/1.2.8-foss-2019b-Perl-5.30.0
 # # mkdir $OUTDIR/FastPlast
-fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz -2 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz –-threads 16 --bowtie_index Geraniales --coverage_analysis
+# fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq.gz -2 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq.gz –-threads 16 --bowtie_index Geraniales --coverage_analysis
 
 ####################################################################
 # 3) Maps trimmed reads to reference plastome
@@ -146,16 +146,16 @@ fast-plast.pl -1 $OUTDIR/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_
 # PLASTOME MUMMER PLOTS
 ####################################################################
 
-mkdir $OUTDIR/novomummer
-nucmer /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/novoplasty/Contigs_1_NovoTest.fasta -p $OUTDIR/novomummer/nucmer
-delta-filter -1 $OUTDIR/novomummer/nucmer.delta > $OUTDIR/novomummer/nucmer.1delta
-mummerplot --size large -layout --color -f --png $OUTDIR/novomummer/nucmer.1delta -p $OUTDIR/novomummer/nucmer
-
-
-mkdir $OUTDIR/GOmummer
-nucmer /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/plastome_GetOrganelle2/embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta -p $OUTDIR/GOmummer/nucmer
-delta-filter -1 $OUTDIR/GOmummer/nucmer.delta > $OUTDIR/GOmummer/nucmer.1delta
-mummerplot --size large -layout --color -f --png $OUTDIR/GOmummer/nucmer.1delta -p $OUTDIR/GOmummer/nucmer
+# mkdir $OUTDIR/novomummer
+# nucmer /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/novoplasty/Contigs_1_NovoTest.fasta -p $OUTDIR/novomummer/nucmer
+# delta-filter -1 $OUTDIR/novomummer/nucmer.delta > $OUTDIR/novomummer/nucmer.1delta
+# mummerplot --size large -layout --color -f --png $OUTDIR/novomummer/nucmer.1delta -p $OUTDIR/novomummer/nucmer
+#
+#
+# mkdir $OUTDIR/GOmummer
+# nucmer /home/srb67793/G_maculatum_novogene/plastome/G_incanum_plastomesequence.fasta $OUTDIR/plastome_GetOrganelle2/embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta -p $OUTDIR/GOmummer/nucmer
+# delta-filter -1 $OUTDIR/GOmummer/nucmer.delta > $OUTDIR/GOmummer/nucmer.1delta
+# mummerplot --size large -layout --color -f --png $OUTDIR/GOmummer/nucmer.1delta -p $OUTDIR/GOmummer/nucmer
 ####################################################################
 # 4) NEED TO ANNOTATE PLASTOME
 ####################################################################
@@ -209,9 +209,9 @@ mummerplot --size large -layout --color -f --png $OUTDIR/GOmummer/nucmer.1delta 
 ####################################################################
 
 # mkdir $OUTDIR/meraculous
-# # mkdir $OUTDIR/meraculous/test
-# source activate ${EBROOTMERACULOUS}
-# run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/test -cleanup_level 1
+mkdir $OUTDIR/meraculous/resourcestest
+source activate ${EBROOTMERACULOUS}
+run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/resourcestest -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
