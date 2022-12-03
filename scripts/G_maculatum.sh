@@ -3,7 +3,7 @@
 #SBATCH --partition=batch                # Partition (queue) name
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=64
+#SBATCH --cpus-per-task=54
 #SBATCH --mem=300gb
 #SBATCH --time=48:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
@@ -209,9 +209,9 @@ ml Meraculous/2.2.6
 ####################################################################
 
 # mkdir $OUTDIR/meraculous
-mkdir $OUTDIR/meraculous/resourcestest
+#mkdir $OUTDIR/meraculous/resourcestest
 source activate ${EBROOTMERACULOUS}
-run_meraculous.sh -c /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/resourcestest -cleanup_level 1
+run_meraculous.sh -c  /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/resourcestest -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
