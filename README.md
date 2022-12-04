@@ -64,8 +64,8 @@ Contains 10 files:
 
 *Mummer Plots*
 
--GOnucmer.png
--novonucmer.png
+-GOnucmer.png  
+-novonucmer.png   
 
 **pretrimQC**
 
