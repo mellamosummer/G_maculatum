@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=meraculoustest                # Job name
+#SBATCH --job-name=meraculous0                # Job name
 #SBATCH --partition=batch                # Partition (queue) name
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -211,7 +211,7 @@ ml Meraculous/2.2.6
 # mkdir $OUTDIR/meraculous
 #mkdir $OUTDIR/meraculous/resourcestest
 source activate ${EBROOTMERACULOUS}
-run_meraculous.sh -c  /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/resourcestest -cleanup_level 1
+run_meraculous.sh -c  /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/diploid0test -cleanup_level 1
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
