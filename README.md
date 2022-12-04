@@ -82,9 +82,9 @@ MultiQC report contains summary for 2 raw read files.
 
 Contains 3 files: 
 
--G_maculatum.sh
--G_maculatum.config
--config.txt
+-G_maculatum.sh  
+-G_maculatum.config  
+-config.txt  
 
 **trimmedQC**  
 
