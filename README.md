@@ -25,7 +25,7 @@ This repository contains the scripts & results for analyzing Illumina shotgun se
 
 # File structure
 
-## k-mer Anlaysis ##
+## k-mer analysis ##
 
 **genomescope**
 
