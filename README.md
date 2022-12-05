@@ -24,6 +24,9 @@ This repository contains the scripts & results for analyzing Illumina shotgun se
 8) QUAST
 
 # File structure
+
+## k-mer Anlaysis ##
+
 **genomescope**
 
 Contains 7 folders: k19,	k21, k23, k25, k27, k29, k31  
@@ -47,25 +50,31 @@ Contains 7 files:
 
 Each file used with GenomeScope to generate kmer visualization.
 
-**plastome** 
+## plastome ##
 
-Contains 10 files:  
+**Bandage**
+
 -BANDAGEgraph.png (Bandage visualization from GetOrganelle)  
--Contigs_1_NovoTest.fasta (Contigs from NOVOPlasty)  
--embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta (Scaffolds from GetOrganelle)  
 -extended_K115.assembly_graph.fastg.extend-embplant_pt-embplant_mt.fastg (Assembly graph from GetOrganelle)  
 
-*Files for IGV*
+**Contigs**
+
+-Contigs_1_NovoTest.fasta (Contigs from NOVOPlasty)  
+-embplant_pt.K115.scaffolds.graph1.1.path_sequence.fasta (Scaffolds from GetOrganelle)  
+
+**Mapping**
 
 -G_incanum_plastomesequence.fa  
 -G_incanum_plastomesequence.fasta  
 -G_incanum_plastomesequence.fasta.fai 
 -GIncanumVsGmaculatum.xml
 
-*Mummer Plots*
+**Mummer Plots**
 
 -GOnucmer.png  
 -novonucmer.png   
+
+## QC ##
 
 **pretrimQC**
 
@@ -78,14 +87,6 @@ Contains 5 files:
 
 MultiQC report contains summary for 2 raw read files.
 
-**scripts**
-
-Contains 3 files: 
-
--G_maculatum.sh  
--G_maculatum.config  
--config.txt  
-
 **trimmedQC**  
 
 Contains 5 files:  
@@ -96,3 +97,12 @@ Contains 5 files:
 -OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired_fastqc.html  
 
 MultiQC report contains summary for 2 trimmed read files. 
+
+## scripts ##
+
+Contains 3 files: 
+
+-G_maculatum.sh  
+-G_maculatum.config  
+-config.txt  
+
