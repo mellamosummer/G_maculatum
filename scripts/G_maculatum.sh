@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=meraculous0                # Job name
+#SBATCH --job-name=meraculous1                # Job name
 #SBATCH --partition=batch                # Partition (queue) name
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -209,9 +209,11 @@ ml Meraculous/2.2.6
 ####################################################################
 
 # mkdir $OUTDIR/meraculous
-#mkdir $OUTDIR/meraculous/resourcestest
+#mkdir $OUTDIR/meraculous/diploid0test
 source activate ${EBROOTMERACULOUS}
-run_meraculous.sh -c  /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/diploid0test -cleanup_level 1
+run_meraculous.sh -c  /home/srb67793/G_maculatum_novogene/scripts/G_maculatum.config -dir /scratch/srb67793/G_maculatum/meraculous/diploid1test -cleanup_level 1
+
+# fasta_stats $OUTDIR/meraculous/diploid1test/run_2022-12-04_10h01m10s/meraculous_merblast/contigs.fa > $OUTDIR/meraculous/diploid0test/run_2022-12-04_10h01m10s/meraculous_merblast/fasta_stats.txt
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
