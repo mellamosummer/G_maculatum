@@ -1,6 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=extract_reads                # Job name
 #SBATCH --partition=batch                # Partition (queue) name
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=50gb
 #SBATCH --time=24:00:00		                            # Time limit hrs:min:sec
