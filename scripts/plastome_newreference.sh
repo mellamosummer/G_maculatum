@@ -15,19 +15,13 @@ module load BWA/0.7.17-GCC-8.3.0
 module load SAMtools/1.10-GCC-8.3.0
 module load BCFtools/1.10.2-GCC-8.3.0
 
-# Set the path to the input bam file
-bam_file="/path/to/input.bam"
-
-# Set the path to the output bed file
-bed_file="/path/to/output.bed"
-
-OUTDIR="/scratch/srb67793/G_maculatum/plastome_tests/mapping/"
+OUTDIR="/scratch/srb67793/G_maculatum/plastome_tests/mapping"
 
 # Set the path to the input bam file
 bam_file="/scratch/srb67793/G_maculatum/plastome_tests/mapping/G_maculatum.sorted.bam"
 
 # Set the path to the output bed file
-bed_file="scratch/srb67793/G_maculatum/plastome_tests/mapping/Gmaculatumoutput.bed"
+bed_file="/scratch/srb67793/G_maculatum/plastome_tests/mapping/Gmaculatumoutput.bed"
 
 # Extract the reads with at most 100,000 counts from the bam file
 samtools view -h $bam_file | awk '$10<=100000' | samtools view -b - > $bed_file
