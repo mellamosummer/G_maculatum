@@ -18,3 +18,4 @@ Scaffold      of        of      Scaffold      Contig     Contig
   10 kb        82         82    1,070,618    1,070,618   100.00%
   25 kb         1          1       25,282       25,282   100.00%
   50 kb         0          0            0            0     0.00%
+
