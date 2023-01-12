@@ -3,8 +3,8 @@
 #SBATCH --partition=batch                # Partition (queue) name
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=54
-#SBATCH --mem=300gb
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=100gb
 #SBATCH --time=48:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
@@ -130,7 +130,7 @@ module load BCFtools/1.10.2-GCC-8.3.0
 #
 # samtools sort $OUTDIR/mapping/G_maculatum.bam -o $OUTDIR/mapping/G_maculatum.sorted.bam
 #
-# samtools index -@ 6 $OUTDIR/mapping/G_maculatum.sorted.bam
+# samtools index -@ 6 $OUTDIR/mapping/G_maculatum.sorted.ba12m
 #
 # #Calls variants from (i) reads with mapping quality greater than 60, excludes variants that have a (ii) quality score of less than 40, and excludes variants that are (iii) supported by fewer than 10 reads for the E. coli C600 genome using `bcftools mpileup`, `bcftools call`, and `bcftools filter` (BCFtools/1.10.2-GCC-8.3.0):
 #
@@ -219,41 +219,40 @@ module load BCFtools/1.10.2-GCC-8.3.0
 ####################################################################
 # 8) Maps trimmed reads to meraculous contigs
 ####################################################################
-
-#first determine scaffold lengths
+#
+# # first determine scaffold lengths
 # seqkit fx2tab --length --name --header-line $OUTDIR/meraculous/diploid0test/run_2022-12-04_10h01m10s/meraculous_final_results/final.scaffolds.fa > scaffold_lengths.txt
-
-#view longest scaffolds
+#
+# # view longest scaffolds
 # tail $OUTDIR/meraculous/diploid0test/run_2022-12-04_10h01m10s/meraculous_final_results/scaffold_lengths_sorted.txt
-
-mkdir $OUTDIR/meraculous/diploid0test/mapping
-
-#extract the longest reads
-seqkit grep -p Scaffold51732 $OUTDIR/meraculous/diploid0test/run_2022-12-04_10h01m10s/meraculous_final_results/final.scaffolds.fa > $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta
+#
+# mkdir $OUTDIR/meraculous/diploid0test/mapping
+#
+# # extract the longest reads
+# seqkit grep -p Scaffold51732 $OUTDIR/meraculous/diploid0test/run_2022-12-04_10h01m10s/meraculous_final_results/final.scaffolds.fa > $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta
 # seqkit grep -p Scaffold190046 final.scaffolds.fa > $OUTDIR/meraculous/diploid0test/mapping/Scaffold190046.fasta
 # seqkit grep -p Scaffold605022 final.scaffolds.fa > $OUTDIR/meraculous/diploid0test/mapping/Scaffold605022.fasta
 
-#Constructs a BWA index for the reference plastome
+# Constructs a BWA index for the scaffold
 bwa index $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta
 
-#Maps the reads to the reference plastome
+#Maps the reads to the scaffold
 #stores the mapped reads in sorted .bam format
 bwa mem -t 6 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq > $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.bam
 
 samtools sort $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.bam -o $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam
 
-samtools index -@ 6 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam
+samtools index -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam
 
-#Calls variants from (i) reads with mapping quality greater than 60, excludes variants that have a (ii) quality score of less than 40, and excludes variants that are (iii) supported by fewer than 10 reads for the E. coli C600 genome using `bcftools mpileup`, `bcftools call`, and `bcftools filter` (BCFtools/1.10.2-GCC-8.3.0):
+#Calls variants from (i) reads with mapping quality greater than 60, excludes variants that have a (ii) quality score of less than 40, and excludes variants that are (iii) supported by fewer than 10 reads for the genome
 
-bcftools mpileup -Ou --threads 6 --min-MQ 60 -f $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta
-$OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam | bcftools call --threads 6 -mv -Ou \
---ploidy 4 | bcftools filter -Oz -e 'QUAL<40 || DP<10' > \
+bcftools mpileup -Ou --threads 6 --min-MQ 10 -f $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam | bcftools call --threads 6 -mv -Ou \
+--ploidy 1 | bcftools filter -Oz -e 'QUAL<40 || DP<10' > \
 $OUTDIR/meraculous/diploid0test/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 bcftools view $OUTDIR/mapping/Scaffold51732.sorted.mpileup.call.filter.onestep.vcf.gz
 
-samtools flagstat -@ 6 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/flagstat_Scaffold51732.txt
-samtools stats -@ 6 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/stats_Scaffold51732.txt
+samtools flagstat -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/flagstat_Scaffold51732.txt
+samtools stats -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/stats_Scaffold51732.txt
 
 
 ####################################################################
