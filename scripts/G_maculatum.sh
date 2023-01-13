@@ -233,27 +233,48 @@ module load BCFtools/1.10.2-GCC-8.3.0
 # seqkit grep -p Scaffold190046 final.scaffolds.fa > $OUTDIR/meraculous/diploid0test/mapping/Scaffold190046.fasta
 # seqkit grep -p Scaffold605022 final.scaffolds.fa > $OUTDIR/meraculous/diploid0test/mapping/Scaffold605022.fasta
 
-# Constructs a BWA index for the scaffold
-bwa index $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta
-
-#Maps the reads to the scaffold
-#stores the mapped reads in sorted .bam format
-bwa mem -t 6 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq > $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.bam
-
-samtools sort $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.bam -o $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam
-
-samtools index -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam
-
-#Calls variants from (i) reads with mapping quality greater than 60, excludes variants that have a (ii) quality score of less than 40, and excludes variants that are (iii) supported by fewer than 10 reads for the genome
-
-bcftools mpileup -Ou --threads 6 --min-MQ 10 -f $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam | bcftools call --threads 6 -mv -Ou \
---ploidy 1 | bcftools filter -Oz -e 'QUAL<40 || DP<10' > \
-$OUTDIR/meraculous/diploid0test/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
-bcftools view $OUTDIR/mapping/Scaffold51732.sorted.mpileup.call.filter.onestep.vcf.gz
+# # Constructs a BWA index for the scaffold
+# bwa index $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta
+#
+# #Maps the reads to the scaffold
+# #stores the mapped reads in sorted .bam format
+# bwa mem -t 6 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R1_paired.fq $OUTDIR/trimmomatic/OT1_CKDN220054653-1A_HF33VDSX5_L1_R2_paired.fq > $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.bam
+#
+# samtools sort $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.bam -o $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam
+#
+# samtools index -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam
+#
+# #Calls variants from (i) reads with mapping quality greater than 60, excludes variants that have a (ii) quality score of less than 40, and excludes variants that are (iii) supported by fewer than 10 reads for the genome
+#
+# bcftools mpileup -Ou --threads 6 --min-MQ 10 -f $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam | bcftools call --threads 6 -mv -Ou \
+# --ploidy 1 | bcftools filter -Oz -e 'QUAL<40 || DP<10' > $OUTDIR/meraculous/diploid0test/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
+#
+# bcftools view $OUTDIR/meraculous/diploid0test/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 
 samtools flagstat -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/flagstat_Scaffold51732.txt
 samtools stats -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/stats_Scaffold51732.txt
 
+####################################################################
+# VISUSLIZE SNPS & COVERAGE
+####################################################################
+
+
+# make a text file in the format bedtools wants for -g (which is the chromosome name and its length)
+awk '{ print $1"\t"$2 }' Scaffold51732.fasta.fai > ref.lengths.txt
+​
+#load bedtools
+ml BEDTools/2.30.0-GCC-8.3.0
+
+# convert the genome to sliding windows (10kb) - you can play with the size of these windows to view more/less details (eg, try 1kb - 100kb windows)
+bedtools makewindows -g ref.lengths.txt -w 10000 -s 9000 > ref.10kb_windows.bed
+
+# calculate read mapping depth from a SORTED bam file, within each sliding window in the bed file
+bedtools coverage -a ref.10kb_windows.bed -b Scaffold51732.sorted.bam -mean > query.10kb_windows.DEPTH.txt
+
+#plot in R
+source activate R
+R --no-save < /home/srb67793/G_maculatum_novogene/scripts/plot_read_DEPTH.R
+source deactivate R
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
