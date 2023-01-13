@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
-#SBATCH --mem=100gb
+#SBATCH --mem=300gb
 #SBATCH --time=48:00:00		                            # Time limit hrs:min:sec
 #SBATCH --output="/home/srb67793/G_maculatum_novogene/log.%j"			    # Location of standard output and error log files
 #SBATCH --mail-user=srb67793@uga.edu                    # Where to send mail
@@ -251,8 +251,8 @@ module load BCFtools/1.10.2-GCC-8.3.0
 #
 # bcftools view $OUTDIR/meraculous/diploid0test/mapping/G_maculatum.sorted.mpileup.call.filter.onestep.vcf.gz
 
-samtools flagstat -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/flagstat_Scaffold51732.txt
-samtools stats -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/stats_Scaffold51732.txt
+# samtools flagstat -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/flagstat_Scaffold51732.txt
+# samtools stats -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam > $OUTDIR/mapping/stats_Scaffold51732.txt
 
 ####################################################################
 # VISUSLIZE SNPS & COVERAGE
@@ -260,7 +260,7 @@ samtools stats -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorte
 
 
 # make a text file in the format bedtools wants for -g (which is the chromosome name and its length)
-awk '{ print $1"\t"$2 }' $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta.fai > $OUTDIR/meraculous/diploid0test/mapping/ref.lengths.txt
+# awk '{ print $1"\t"$2 }' $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta.fai > $OUTDIR/meraculous/diploid0test/mapping/ref.lengths.txt
 ​
 #load bedtools
 ml BEDTools/2.30.0-GCC-8.3.0
