@@ -5,7 +5,7 @@ library(viridis)
 library(hrbrthemes)
 
 # read in txt file
-data <- read.table(file = "query.10kb_windows.read_DEPTH.txt")
+data <- read.table(file = "/scratch/srb67793/G_maculatum/meraculous/diploid0test/mapping/query.10kb_windows.read_DEPTH.txt")
 # add column names for plotting easier
 colnames(data) <- c("scaffold","start","stop","depth")
 

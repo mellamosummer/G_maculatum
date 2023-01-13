@@ -260,16 +260,16 @@ samtools stats -@ 10 $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorte
 
 
 # make a text file in the format bedtools wants for -g (which is the chromosome name and its length)
-awk '{ print $1"\t"$2 }' Scaffold51732.fasta.fai > ref.lengths.txt
+awk '{ print $1"\t"$2 }' $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta.fai > $OUTDIR/meraculous/diploid0test/mapping/ref.lengths.txt
 ​
 #load bedtools
 ml BEDTools/2.30.0-GCC-8.3.0
 
 # convert the genome to sliding windows (10kb) - you can play with the size of these windows to view more/less details (eg, try 1kb - 100kb windows)
-bedtools makewindows -g ref.lengths.txt -w 10000 -s 9000 > ref.10kb_windows.bed
+bedtools makewindows -g $OUTDIR/meraculous/diploid0test/mapping/ref.lengths.txt -w 10000 -s 9000 > $OUTDIR/meraculous/diploid0test/mapping/ref.10kb_windows.bed
 
 # calculate read mapping depth from a SORTED bam file, within each sliding window in the bed file
-bedtools coverage -a ref.10kb_windows.bed -b Scaffold51732.sorted.bam -mean > query.10kb_windows.DEPTH.txt
+bedtools coverage -a $OUTDIR/meraculous/diploid0test/mapping/ref.10kb_windows.bed -b $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam -mean > $OUTDIR/meraculous/diploid0test/mapping/query.10kb_windows.DEPTH.txt
 
 #plot in R
 source activate R
