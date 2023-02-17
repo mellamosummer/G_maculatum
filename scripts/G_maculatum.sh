@@ -263,18 +263,33 @@ module load BCFtools/1.10.2-GCC-8.3.0
 # awk '{ print $1"\t"$2 }' $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.fasta.fai > $OUTDIR/meraculous/diploid0test/mapping/ref.lengths.txt
 ​
 #load bedtools
-ml BEDTools/2.30.0-GCC-8.3.0
+# ml BEDTools/2.30.0-GCC-8.3.0
+#
+# # convert the genome to sliding windows (10kb) - you can play with the size of these windows to view more/less details (eg, try 1kb - 100kb windows)
+# bedtools makewindows -g $OUTDIR/meraculous/diploid0test/mapping/ref.lengths.txt -w 10000 -s 9000 > $OUTDIR/meraculous/diploid0test/mapping/ref.10kb_windows.bed
+#
+# # calculate read mapping depth from a SORTED bam file, within each sliding window in the bed file
+# bedtools coverage -a $OUTDIR/meraculous/diploid0test/mapping/ref.10kb_windows.bed -b $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam -mean > $OUTDIR/meraculous/diploid0test/mapping/query.10kb_windows.DEPTH.txt
+#
+# #plot in R
+# source activate R
+# R --no-save < /home/srb67793/G_maculatum_novogene/scripts/plot_read_DEPTH.R
+# source deactivate R
 
-# convert the genome to sliding windows (10kb) - you can play with the size of these windows to view more/less details (eg, try 1kb - 100kb windows)
-bedtools makewindows -g $OUTDIR/meraculous/diploid0test/mapping/ref.lengths.txt -w 10000 -s 9000 > $OUTDIR/meraculous/diploid0test/mapping/ref.10kb_windows.bed
+####################################################################
+# smudgeplot
+####################################################################
 
-# calculate read mapping depth from a SORTED bam file, within each sliding window in the bed file
-bedtools coverage -a $OUTDIR/meraculous/diploid0test/mapping/ref.10kb_windows.bed -b $OUTDIR/meraculous/diploid0test/mapping/Scaffold51732.sorted.bam -mean > $OUTDIR/meraculous/diploid0test/mapping/query.10kb_windows.DEPTH.txt
-
-#plot in R
-source activate R
-R --no-save < /home/srb67793/G_maculatum_novogene/scripts/plot_read_DEPTH.R
-source deactivate R
+mkdir tmp
+ls /scratch/srb67793/G_maculatum/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_1.fq /scratch/srb67793/G_maculatum/rawreads/G_maculatum/OT1_CKDN220054653-1A_HF33VDSX5_L1_2.fq > FILES
+kmc -k21 -t16 -m64 -ci1 -cs10000 @FILES kmer_counts tmp
+kmc_tools transform kmer_counts histogram kmer_k21.hist
+Rscript genomescope.R -i kmer_k21.hist -k 21 -p 2 -o . -n Gmaculatum_genomescope 10000
+smudgeplot.py cutoff kmer_k21.hist L #10
+smudgeplot.py cutoff kmer_k21.hist U #2200
+kmc_dump -ci10 -cx2200 kmer_counts kmer_k21.dump
+smudgeplot.py hetkmers -o kmer_pairs < kmer_k21.dump
+smudgeplot.py plot -o G_maculatum -t "Geranium maculatum" -q 0.99 kmer_pairs_coverages.tsv
 
 ####################################################################
 # 7) EVALUATES GENOME ASSEMBLY
